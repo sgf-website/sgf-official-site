@@ -245,6 +245,75 @@ ${portalBand()}
   return layout({ path: '/', title: NAME(), active: 'home', body, extraHead: '<link rel="stylesheet" href="/assets/css/heroes.css"><link rel="preload" as="image" href="/assets/img/gfa2026/DSC01789.webp">' });
 }
 
+
+function homeV2() {
+  const [up, past] = upcomingFirst();
+  const items = [
+    ...[...up, ...past].map((e) => ({ kind: 'event', date: e.date, o: e })),
+    ...news.map((n) => ({ kind: 'news', date: n.date, o: n })),
+  ].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  const feat = up[0] ? { kind: 'event', o: up[0] } : items[0];
+  const rest = items.filter((x) => x.o !== feat.o).slice(0, 4);
+  const href = (x) => u(`/${x.kind === 'event' ? 'events' : 'news'}/${x.o.slug}/`);
+  const kindLabel = (x) => (x.kind === 'news' ? t('خبر', 'News') : (TYPE()[x.o.type] || TYPE().event));
+  const when = (x) => (x.kind === 'news' ? fmtDate(x.o.date) : fmtRange(x.o));
+  const fc = centre(feat.o.centre);
+  const featured = `<a class="feat" href="${href(feat)}">
+    <div class="feat-img">${feat.o.cover ? `<img src="${esc(feat.o.cover)}" alt="">` : ph}</div>
+    <div class="feat-body"><div class="meta"><span class="tag" style="--tc:${fc.color}">${esc(f(fc, 'short'))}</span><span>${esc(kindLabel(feat))}</span><span>📅 ${esc(when(feat))}</span></div>
+    <h3>${esc(f(feat.o, 'title'))}</h3><p>${esc(f(feat.o, 'summary'))}</p><span class="more">${t('التفاصيل', 'Details')} ${ARROW()}</span></div></a>`;
+  const list = rest.map((x) => { const c = centre(x.o.centre); return `<a class="mini" href="${href(x)}"><div class="mini-img">${x.o.cover ? `<img src="${esc(x.o.cover)}" alt="" loading="lazy">` : ph}</div><div><div class="meta"><span class="tag" style="--tc:${c.color}">${esc(f(c, 'short'))}</span><span>${esc(kindLabel(x))}</span></div><h4>${esc(f(x.o, 'title'))}</h4><span class="date">${esc(when(x))}</span></div></a>`; }).join('');
+  const album = albums[0];
+  const strip = album ? `<section class="section"><div class="wrap">
+    <div class="split-head"><div>${secHead(t('معرض الصور', 'Photo Gallery'), esc(f(album, 'title')))}</div><a class="btn btn-primary" href="${u(`/gallery/${album.slug}/`)}">${t('عرض الألبوم كاملًا', 'View full album')} (${album.photos.length})</a></div>
+    <div class="strip">${album.photos.slice(0, 7).map((p, i) => `<a href="${u(`/gallery/${album.slug}/`)}" class="s${i}"><img src="${album.photo_dir}${p}-sm.webp" alt="" loading="lazy"></a>`).join('')}</div>
+    <div class="sec-more"><a class="btn btn-soft" href="${u('/gallery/')}">${t('كل الألبومات', 'All albums')}</a></div>
+  </div></section>` : '';
+  const stats = [
+    [liveCentres.length, t('مراكز تدريب', 'training centres'), t('وقريبًا جدة', 'Jeddah coming soon')],
+    [coaches.length, t('مدربًا ومدربة', 'certified coaches'), t('في الخبر والرياض', 'in Khobar and Riyadh')],
+    ['+5', t('سنوات', 'years'), t('العمر الأدنى للتسجيل', 'minimum age to join')],
+    [events.length, t('بطولات وفعاليات', 'competitions & events'), t('في أرشيف الموقع', 'in our archive')],
+  ].map(([n, l, s]) => `<div><span class="n">${n}</span><span class="l">${l}</span><span class="s">${s}</span></div>`).join('');
+  const quick = [
+    ['#EB0045', '📝', t('سجّل الآن', 'Register now'), t('نموذج تسجيل سريع للاعبين الجدد من عمر 5 سنوات.', 'A quick registration form for new players aged 5 and up.'), site.register_url],
+    ['#FFA500', '💳', t('الباقات والأسعار', 'Packages & prices'), t('اشتراكات شهرية تبدأ من 800 ريال.', 'Monthly subscriptions from SAR 800.'), u('/centres/khobar/#packages')],
+    ['#0075C9', '🏆', t('جداول البطولات', 'Competition calendar'), t('مواعيد البطولات والفعاليات القادمة.', 'Upcoming competitions and events.'), u('/events/')],
+    ['#0A5640', '📍', t('مراكز التدريب', 'Training centres'), t('الخبر، الرياض، وقريبًا جدة.', 'Khobar, Riyadh, and soon Jeddah.'), '#centres'],
+  ].map(([c, i, ti, d, h]) => `<a class="qk" href="${h}" style="--c:${c}"><span class="qi">${i}</span><span class="qt">${ti}</span><span class="qd">${d}</span><span class="qa">${ARROW()}</span></a>`).join('');
+  const body = `
+<section class="hx hx-b home-hero"><div class="slides">${['DSC01789', 'DSC00565', 'DSC01611', 'DSC01024'].map((p, i) => `<img src="/assets/img/gfa2026/${p}.webp" alt="" aria-hidden="true"${i ? ' loading="lazy"' : ' fetchpriority="high"'}>`).join('')}</div><div class="inner">
+  <h1>${esc(NAME())}</h1><p class="sub">${esc(f(site, 'tagline'))}</p>
+  <div class="actions"><a class="btn btn-accent" href="${site.register_url}">${t('سجّل طفلك الآن', 'Register your child')}</a><a class="btn btn-ghost" href="#centres">${t('مراكز التدريب', 'Training centres')}</a></div>
+</div></section>
+<div class="wrap"><div class="quick2">${quick}</div></div>
+
+<section class="section" id="centres"><div class="wrap">
+  ${secHead(t('مراكز التدريب', 'Training Centres'), t('اختر المركز الأقرب إليك', 'Choose your nearest centre'))}
+  <div class="grid">${Object.values(site.centres).filter((c) => c.slug).map(centreCard).join('')}</div>
+</div></section>
+
+<section class="stats-band"><div class="wrap"><div class="stats2">${stats}</div></div></section>
+
+<section class="section"><div class="wrap">
+  <div class="split-head"><div>${secHead(t('المركز الإعلامي', 'Media Centre'), t('آخر الأخبار والبطولات', 'Latest news & competitions'))}</div><a class="btn btn-primary" href="${u('/media/')}">${t('كل المحتوى الإعلامي', 'All media')}</a></div>
+  <div class="feat-grid">${featured}<div class="mini-list">${list}</div></div>
+</div></section>
+
+${strip}
+${portalBand()}
+
+<section class="section"><div class="wrap">
+  ${secHead(t('عن الاتحاد', 'About'), t('الفريق الذي يقف خلف الجمباز السعودي', 'The team behind Saudi gymnastics'))}
+  <div class="grid about">
+    <a href="${u('/about/team/')}"><span class="t">${t('مجلس الإدارة والفريق', 'Board & Team')}</span><span class="d">${t('أعضاء مجلس الإدارة، الجهاز الإداري، وإدارة المراكز.', 'Board members, administrative staff and centre management.')}</span><span class="m">${t('تعرّف على الفريق', 'Meet the team')} ${ARROW()}</span></a>
+    <a href="${u('/about/coaches/')}"><span class="t">${t('المدربون', 'Coaches')}</span><span class="d">${t('مدربون ومدربات معتمدون في الخبر والرياض.', 'Certified coaches in Khobar and Riyadh.')}</span><span class="m">${t('عرض المدربين', 'View coaches')} ${ARROW()}</span></a>
+    <a href="${u('/about/partners/')}"><span class="t">${t('الأندية والشركاء', 'Clubs & Partners')}</span><span class="d">${t('الأندية المعتمدة والشركاء والرعاة.', 'Approved clubs, partners and sponsors.')}</span><span class="m">${t('عرض الشركاء', 'View partners')} ${ARROW()}</span></a>
+  </div>
+</div></section>`;
+  return layout({ path: '/home-v2/', title: NAME(), active: 'home', body, extraHead: '<link rel="stylesheet" href="/assets/css/heroes.css"><meta name="robots" content="noindex">' });
+}
+
 function centrePage(c) {
   const isKhobar = c.slug === 'khobar';
   const k = khobar();
@@ -439,6 +508,7 @@ for (const lang of ['ar', 'en']) {
   const base = lang === 'en' ? 'en/' : '';
   const put = (p, html) => { const file = join(OUT, base + p); mkdirSync(dirname(file), { recursive: true }); writeFileSync(file, html); pages++; };
   put('index.html', home());
+  put('home-v2/index.html', homeV2());
   liveCentres.forEach((c) => put(`centres/${c.slug}/index.html`, centrePage(c)));
   put('about/team/index.html', teamPage());
   put('about/coaches/index.html', coachesPage());
