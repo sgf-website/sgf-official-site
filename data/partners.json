@@ -1,8 +1,26 @@
 {
   "clubs": [
-    {"name": "نادي الاتفاق", "centre": "khobar", "days": "الأحد والأربعاء"},
-    {"name": "نادي الثقبة", "centre": "khobar", "days": "الإثنين والخميس"},
-    {"name": "نادي النهضة", "centre": "khobar", "days": "الثلاثاء والسبت"}
+    {
+      "name": "نادي الاتفاق",
+      "centre": "khobar",
+      "days": "الأحد والأربعاء",
+      "name_en": "Al-Ettifaq Club",
+      "days_en": "Sunday & Wednesday"
+    },
+    {
+      "name": "نادي الثقبة",
+      "centre": "khobar",
+      "days": "الإثنين والخميس",
+      "name_en": "Al-Thuqbah Club",
+      "days_en": "Monday & Thursday"
+    },
+    {
+      "name": "نادي النهضة",
+      "centre": "khobar",
+      "days": "الثلاثاء والسبت",
+      "name_en": "Al-Nahda Club",
+      "days_en": "Tuesday & Saturday"
+    }
   ],
   "partners": []
 }

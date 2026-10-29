@@ -2,19 +2,64 @@
   "hero_sub": "رحلة طفلك نحو التميّز تبدأ من هنا",
   "founded": "تأسس عام 1398هـ",
   "stats": [
-    {"n": "37", "l": "جهاز تدريب معتمد"},
-    {"n": "2", "l": "بطولة ودية سنويًا"},
-    {"n": "+5", "l": "سنوات — العمر الأدنى"},
-    {"n": "4–8", "l": "مساءً · يوميًا عدا الجمعة"}
+    {
+      "n": "37",
+      "l": "جهاز تدريب معتمد"
+    },
+    {
+      "n": "2",
+      "l": "بطولة ودية سنويًا"
+    },
+    {
+      "n": "+5",
+      "l": "سنوات — العمر الأدنى"
+    },
+    {
+      "n": "4–8",
+      "l": "مساءً · يوميًا عدا الجمعة"
+    }
   ],
   "packages_note": "اشتراكات شهرية تبدأ في اليوم الأول من كل شهر ميلادي.",
   "packages": [
-    {"tag": "الأطفال", "title": "من 5 إلى 13 سنة", "price": "800", "unit": "ريال / شهريًا", "color": "#FFA500", "cta": "سجّل في هذه الباقة",
-     "points": ["حصتان أسبوعيًا (8 حصص في الشهر)", "مدة الحصة ساعة ونصف", "اختر الأيام والوقت من الجدول"]},
-    {"tag": "السيدات", "title": "النساء فوق 15 سنة", "price": "800", "unit": "ريال / شهريًا", "color": "#EB0045", "cta": "سجّلي الآن",
-     "points": ["حصتان أسبوعيًا (8 حصص في الشهر)", "الأحد والأربعاء", "7:00 – 8:30 مساءً"]},
-    {"tag": "تدريب مكثّف", "title": "التدريبات الخاصة", "price": "من 1,000", "unit": "ريال / شهريًا", "color": "#0075C9", "cta": "تواصل معنا",
-     "points": ["يومان أسبوعيًا — 1,000 ريال", "3 أيام — 1,500 ريال · 5 أيام — 2,000 ريال", "حصة 3 ساعات، وتتوفر تدريبات فردية"]}
+    {
+      "tag": "الأطفال",
+      "title": "من 5 إلى 13 سنة",
+      "price": "800",
+      "unit": "ريال / شهريًا",
+      "color": "#FFA500",
+      "cta": "سجّل في هذه الباقة",
+      "points": [
+        "حصتان أسبوعيًا (8 حصص في الشهر)",
+        "مدة الحصة ساعة ونصف",
+        "اختر الأيام والوقت من الجدول"
+      ]
+    },
+    {
+      "tag": "السيدات",
+      "title": "النساء فوق 15 سنة",
+      "price": "800",
+      "unit": "ريال / شهريًا",
+      "color": "#EB0045",
+      "cta": "سجّلي الآن",
+      "points": [
+        "حصتان أسبوعيًا (8 حصص في الشهر)",
+        "الأحد والأربعاء",
+        "7:00 – 8:30 مساءً"
+      ]
+    },
+    {
+      "tag": "تدريب مكثّف",
+      "title": "التدريبات الخاصة",
+      "price": "من 1,000",
+      "unit": "ريال / شهريًا",
+      "color": "#0075C9",
+      "cta": "تواصل معنا",
+      "points": [
+        "يومان أسبوعيًا — 1,000 ريال",
+        "3 أيام — 1,500 ريال · 5 أيام — 2,000 ريال",
+        "حصة 3 ساعات، وتتوفر تدريبات فردية"
+      ]
+    }
   ],
   "clubs_box": {
     "title": "اشتراكات وزيارات الأندية",
@@ -29,11 +74,145 @@
   ],
   "schedule": {
     "note": "باقة 5–13 سنة: اختر يومين في الأسبوع ووقتًا واحدًا. مدة الحصة ساعة ونصف.",
-    "slots": ["4:00 – 5:30 م", "5:30 – 7:00 م", "7:00 – 8:30 م"],
+    "slots": [
+      "4:00 – 5:30 م",
+      "5:30 – 7:00 م",
+      "7:00 – 8:30 م"
+    ],
     "rows": [
-      {"days": "الأحد والأربعاء", "cells": ["✓", "✓", "النساء فوق 15"]},
-      {"days": "الإثنين والخميس", "cells": ["✓", "✓", "✓"]},
-      {"days": "الثلاثاء والسبت", "cells": ["✓", "✓", "✓"]}
+      {
+        "days": "الأحد والأربعاء",
+        "cells": [
+          "✓",
+          "✓",
+          "النساء فوق 15"
+        ]
+      },
+      {
+        "days": "الإثنين والخميس",
+        "cells": [
+          "✓",
+          "✓",
+          "✓"
+        ]
+      },
+      {
+        "days": "الثلاثاء والسبت",
+        "cells": [
+          "✓",
+          "✓",
+          "✓"
+        ]
+      }
     ]
+  },
+  "en": {
+    "hero_sub": "Your child's journey to excellence starts here",
+    "founded": "Est. 1398 AH",
+    "stats": [
+      {
+        "n": "37",
+        "l": "certified training apparatus"
+      },
+      {
+        "n": "2",
+        "l": "friendly competitions a year"
+      },
+      {
+        "n": "5+",
+        "l": "years — minimum age"
+      },
+      {
+        "n": "4–8",
+        "l": "pm · daily except Friday"
+      }
+    ],
+    "packages_note": "Monthly subscriptions start on the 1st of each Gregorian month.",
+    "packages": [
+      {
+        "tag": "Children",
+        "title": "Ages 5 to 13",
+        "price": "800",
+        "unit": "SAR / month",
+        "color": "#FFA500",
+        "cta": "Register for this package",
+        "points": [
+          "Two classes a week (8 classes a month)",
+          "Each class is 1.5 hours",
+          "Choose your days and time from the timetable"
+        ]
+      },
+      {
+        "tag": "Women",
+        "title": "Women over 15",
+        "price": "800",
+        "unit": "SAR / month",
+        "color": "#EB0045",
+        "cta": "Register now",
+        "points": [
+          "Two classes a week (8 classes a month)",
+          "Sunday and Wednesday",
+          "7:00 – 8:30 pm"
+        ]
+      },
+      {
+        "tag": "Intensive",
+        "title": "Private training",
+        "price": "From 1,000",
+        "unit": "SAR / month",
+        "color": "#0075C9",
+        "cta": "Contact us",
+        "points": [
+          "2 days a week — SAR 1,000",
+          "3 days — SAR 1,500 · 5 days — SAR 2,000",
+          "3-hour sessions; one-to-one training available"
+        ]
+      }
+    ],
+    "clubs_box": {
+      "title": "Club subscriptions and visits",
+      "text": "Full training with federation coaches from SAR 1,000 per player per month, or free visits with the club's own coaches from 4:00 to 7:00 pm.",
+      "clubs": "Current clubs: Al-Ettifaq · Al-Thuqbah · Al-Nahda"
+    },
+    "conditions": [
+      "Participants must be at least 5 years old.",
+      "Medical fitness, with a medical report for any chronic or hereditary condition.",
+      "Passing an assessment by certified specialists.",
+      "Fees are non-refundable and missed classes are not made up."
+    ],
+    "schedule": {
+      "note": "Ages 5–13 package: choose two days a week and one time slot. Each class is 1.5 hours.",
+      "slots": [
+        "4:00 – 5:30 pm",
+        "5:30 – 7:00 pm",
+        "7:00 – 8:30 pm"
+      ],
+      "rows": [
+        {
+          "days": "Sunday & Wednesday",
+          "cells": [
+            "✓",
+            "✓",
+            "Women over 15"
+          ]
+        },
+        {
+          "days": "Monday & Thursday",
+          "cells": [
+            "✓",
+            "✓",
+            "✓"
+          ]
+        },
+        {
+          "days": "Tuesday & Saturday",
+          "cells": [
+            "✓",
+            "✓",
+            "✓"
+          ]
+        }
+      ]
+    }
   }
 }

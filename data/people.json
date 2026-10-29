@@ -1,24 +1,116 @@
 [
-  {"group": "مجلس الإدارة", "people": [
-    {"name": "عبدالله محمد طه", "role": "رئيس مجلس الإدارة"},
-    {"name": "أحمد فؤاد بنان", "role": "نائب رئيس مجلس الإدارة"},
-    {"name": "أشواق صالح الصيعري", "role": "عضو مجلس الإدارة"},
-    {"name": "خليل عبدالقادر النمري", "role": "عضو مجلس الإدارة"},
-    {"name": "علي محمد الشهري", "role": "عضو مجلس الإدارة"},
-    {"name": "حاتم طارق جمال", "role": "عضو مجلس الإدارة"},
-    {"name": "منيرة محمد الدرويش", "role": "عضو مجلس الإدارة"}
-  ]},
-  {"group": "الجهاز الإداري", "people": [
-    {"name": "عمرو بن حسن", "role": "المدير التنفيذي"},
-    {"name": "د. محمد شراقي", "role": "خبير رياضي"},
-    {"name": "عبدالمحسن المرغلاني", "role": "مدير التطوير والاستثمار"},
-    {"name": "محمد العنزي", "role": "مدير إدارة المشاريع"},
-    {"name": "لمى العليمي", "role": "أخصائي تطوير استراتيجية"},
-    {"name": "عبدالعزيز الصمعاني", "role": "محاسب أول"},
-    {"name": "عبدالله الصبي", "role": "محاسب"},
-    {"name": "نورة العصيمي", "role": "الموارد البشرية"}
-  ]},
-  {"group": "إدارة المراكز", "people": [
-    {"name": "حنان الملحم", "role": "مديرة مركز تدريب الخبر"}
-  ]}
+  {
+    "group": "مجلس الإدارة",
+    "people": [
+      {
+        "name": "عبدالله محمد طه",
+        "role": "رئيس مجلس الإدارة",
+        "name_en": "Abdullah Mohammed Taha",
+        "role_en": "Chairman of the Board"
+      },
+      {
+        "name": "أحمد فؤاد بنان",
+        "role": "نائب رئيس مجلس الإدارة",
+        "name_en": "Ahmed Fouad Bannan",
+        "role_en": "Vice Chairman"
+      },
+      {
+        "name": "أشواق صالح الصيعري",
+        "role": "عضو مجلس الإدارة",
+        "name_en": "Ashwaq Saleh Al-Sayari",
+        "role_en": "Board Member"
+      },
+      {
+        "name": "خليل عبدالقادر النمري",
+        "role": "عضو مجلس الإدارة",
+        "name_en": "Khalil Abdulqader Al-Nemri",
+        "role_en": "Board Member"
+      },
+      {
+        "name": "علي محمد الشهري",
+        "role": "عضو مجلس الإدارة",
+        "name_en": "Ali Mohammed Al-Shehri",
+        "role_en": "Board Member"
+      },
+      {
+        "name": "حاتم طارق جمال",
+        "role": "عضو مجلس الإدارة",
+        "name_en": "Hatem Tariq Jamal",
+        "role_en": "Board Member"
+      },
+      {
+        "name": "منيرة محمد الدرويش",
+        "role": "عضو مجلس الإدارة",
+        "name_en": "Munira Mohammed Al-Darwish",
+        "role_en": "Board Member"
+      }
+    ],
+    "group_en": "Board of Directors"
+  },
+  {
+    "group": "الجهاز الإداري",
+    "people": [
+      {
+        "name": "عمرو بن حسن",
+        "role": "المدير التنفيذي",
+        "name_en": "Amr bin Hassan",
+        "role_en": "Chief Executive Officer"
+      },
+      {
+        "name": "د. محمد شراقي",
+        "role": "خبير رياضي",
+        "name_en": "Dr. Mohammed Sharaqi",
+        "role_en": "Sports Expert"
+      },
+      {
+        "name": "عبدالمحسن المرغلاني",
+        "role": "مدير التطوير والاستثمار",
+        "name_en": "Abdulmohsen Al-Marghalani",
+        "role_en": "Development & Investment Director"
+      },
+      {
+        "name": "محمد العنزي",
+        "role": "مدير إدارة المشاريع",
+        "name_en": "Mohammed Al-Anazi",
+        "role_en": "Projects Director"
+      },
+      {
+        "name": "لمى العليمي",
+        "role": "أخصائي تطوير استراتيجية",
+        "name_en": "Lama Al-Olaimi",
+        "role_en": "Strategy Development Specialist"
+      },
+      {
+        "name": "عبدالعزيز الصمعاني",
+        "role": "محاسب أول",
+        "name_en": "Abdulaziz Al-Samaani",
+        "role_en": "Senior Accountant"
+      },
+      {
+        "name": "عبدالله الصبي",
+        "role": "محاسب",
+        "name_en": "Abdullah Al-Subai",
+        "role_en": "Accountant"
+      },
+      {
+        "name": "نورة العصيمي",
+        "role": "الموارد البشرية",
+        "name_en": "Noura Al-Osaimi",
+        "role_en": "Human Resources"
+      }
+    ],
+    "group_en": "Administrative Staff"
+  },
+  {
+    "group": "إدارة المراكز",
+    "people": [
+      {
+        "name": "حنان الملحم",
+        "role": "مديرة مركز تدريب الخبر",
+        "name_en": "Hanan Al-Mulhim",
+        "role_en": "Director, Khobar Training Centre"
+      }
+    ],
+    "group_en": "Centre Management"
+  }
 ]

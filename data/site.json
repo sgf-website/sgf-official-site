@@ -5,7 +5,9 @@
   "portal": {
     "url": "https://members.gymnastics.sa",
     "label": "بوابة الأعضاء",
-    "note": "تُستخدم حاليًا من جهاز الكمبيوتر"
+    "note": "تُستخدم حاليًا من جهاز الكمبيوتر",
+    "label_en": "Member Portal",
+    "note_en": "Currently best used on a computer"
   },
   "centres": {
     "khobar": {
@@ -21,7 +23,12 @@
       "email": "kgc@gymnastics.sa",
       "map": "https://maps.app.goo.gl/U149jr3jsaZ1fKMN8",
       "instagram": "saudigym.dmm",
-      "page": true
+      "page": true,
+      "name_en": "Khobar Training Centre",
+      "short_en": "Khobar",
+      "address_en": "Prince Saud bin Jalawi Sports City — Al-Rakah, Khobar",
+      "hours_en": "4:00 – 8:00 pm",
+      "days_en": "Daily except Friday"
     },
     "riyadh": {
       "slug": "riyadh",
@@ -36,15 +43,30 @@
       "email": "rgc@gymnastics.sa",
       "map": "https://maps.app.goo.gl/5vxx6v5u6WSUmRjB8",
       "instagram": "sgf.riyadh",
-      "page": true
+      "page": true,
+      "name_en": "Riyadh Training Centre",
+      "short_en": "Riyadh",
+      "address_en": "Riyadh",
+      "hours_en": "4:00 – 8:00 pm",
+      "days_en": "Daily except Friday"
     },
     "jeddah": {
       "slug": "jeddah",
       "name": "مركز تدريب جدة",
       "short": "جدة",
       "color": "#5B6560",
-      "soon": true
+      "soon": true,
+      "name_en": "Jeddah Training Centre",
+      "short_en": "Jeddah"
     },
-    "federation": {"name": "الاتحاد السعودي للجمباز", "short": "الاتحاد", "color": "#0A5640"}
-  }
+    "federation": {
+      "name": "الاتحاد السعودي للجمباز",
+      "short": "الاتحاد",
+      "color": "#0A5640",
+      "name_en": "Saudi Gymnastics Federation",
+      "short_en": "Federation"
+    }
+  },
+  "name_en": "Saudi Gymnastics Federation",
+  "tagline_en": "Your gateway to gymnastics in the Kingdom"
 }

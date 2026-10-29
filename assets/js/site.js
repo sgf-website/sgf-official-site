@@ -46,8 +46,9 @@ if (grid && box) {
   document.addEventListener('keydown', (e) => {
     if (!box.classList.contains('open')) return;
     if (e.key === 'Escape') close();
-    if (e.key === 'ArrowLeft') show(i + 1);
-    if (e.key === 'ArrowRight') show(i - 1);
+    const rtl = document.documentElement.dir === 'rtl';
+    if (e.key === 'ArrowLeft') show(rtl ? i + 1 : i - 1);
+    if (e.key === 'ArrowRight') show(rtl ? i - 1 : i + 1);
   });
 }
 
