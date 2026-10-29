@@ -100,31 +100,32 @@ async function main() {
         await saveImage(buf, `img/albums/${slug}`, name); photos.push(name);
       }
     }
-    const zCover = await zohoImage('Website_Albums', r, 'Cover_Photo', `img/albums/${slug}`, 'cover');
+    const unchanged = prev.zoho_modified === r.Modified_Time;
+    const zCover = unchanged ? '' : await zohoImage('Website_Albums', r, 'Cover_Photo', `img/albums/${slug}`, 'cover');
     if (zCover) cover = 'cover'; else if (!cover && photos.length) cover = photos[0];
     if (cover === 'cover' && !photos.length) photos = ['cover'];
-    albums.push({ slug, status: 'published', title: r.Name, date: r.Album_Date || '', centre: centreKey(r.Branch), description: r.Description || '', cover, event: r.Related_Event ? evSlug[r.Related_Event.id] || '' : '', photo_dir, photos, drive_folder: folder || prev.drive_folder || '' });
+    albums.push({ slug, status: 'published', title: r.Name, date: r.Album_Date || '', centre: centreKey(r.Branch), description: r.Description || '', cover, event: r.Related_Event ? evSlug[r.Related_Event.id] || '' : '', photo_dir, photos, drive_folder: folder || prev.drive_folder || '', zoho_modified: r.Modified_Time });
   }
 
   // Events
   const events = [];
   for (const r of evRows) {
     const slug = evSlug[r.id]; const prev = prevEvents[slug] || {};
-    const cover = (await zohoImage('Center_Events', r, 'Cover_Photo', 'img/events', slug)) || prev.cover || '';
+    const cover = (prev.zoho_modified === r.Modified_Time ? '' : await zohoImage('Center_Events', r, 'Cover_Photo', 'img/events', slug)) || prev.cover || '';
     const album = albums.find((a) => a.event === slug);
     const year = (r.Name.match(/(20\d\d)/) || [])[1];
-    events.push({ slug, type: r.Event_Type === 'Competition' ? 'competition' : 'event', status: 'published', title: r.Name, date: r.Event_Date || (year ? `${year}-01-01` : ''), ...(r.Event_Date ? {} : year ? { date_label: year } : {}), date_end: r.End_Date || '', centre: centreKey(r.Branch), location: r.Location || '', summary: r.Website_Summary || '', details: r.Website_Details || '', cover, album: album ? album.slug : '', video: r.Video_Link || '', register_link: r.Registration_Link || '' });
+    events.push({ slug, type: r.Event_Type === 'Competition' ? 'competition' : 'event', status: 'published', title: r.Name, date: r.Event_Date || (year ? `${year}-01-01` : ''), ...(r.Event_Date ? {} : year ? { date_label: year } : {}), date_end: r.End_Date || '', centre: centreKey(r.Branch), location: r.Location || '', summary: r.Website_Summary || '', details: r.Website_Details || '', cover, album: album ? album.slug : '', video: r.Video_Link || '', register_link: r.Registration_Link || '', zoho_modified: r.Modified_Time });
   }
 
   // News
   const news = [];
   for (const r of nwRows) {
     const slug = slugify(r); const prev = prevNews[slug] || {};
-    const cover = (await zohoImage('Website_News', r, 'Cover_Photo', 'img/news', slug)) || prev.cover || '';
+    const cover = (prev.zoho_modified === r.Modified_Time ? '' : await zohoImage('Website_News', r, 'Cover_Photo', 'img/news', slug)) || prev.cover || '';
     const links = [];
     if (r.Related_Album && alSlug[r.Related_Album.id]) links.push({ label: 'ألبوم الصور', href: `/gallery/${alSlug[r.Related_Album.id]}/` });
     if (r.Related_Event && evSlug[r.Related_Event.id]) links.push({ label: 'صفحة البطولة', href: `/events/${evSlug[r.Related_Event.id]}/` });
-    news.push({ slug, status: 'published', title: r.Name, date: r.News_Date || '', centre: centreKey(r.Branch), summary: r.Summary || '', body: r.News_Body || '', cover, links });
+    news.push({ slug, status: 'published', title: r.Name, date: r.News_Date || '', centre: centreKey(r.Branch), summary: r.Summary || '', body: r.News_Body || '', cover, links, zoho_modified: r.Modified_Time });
   }
 
   writeJson('events.json', events);

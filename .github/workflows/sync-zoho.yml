@@ -1,7 +1,7 @@
 name: Sync content from Zoho
 on:
   schedule:
-    - cron: '0 * * * *'        # every hour (safety net)
+    - cron: '15 */3 * * *'     # every 3 hours (safety net; Zoho also triggers instantly)
   repository_dispatch:
     types: [zoho-update]        # instant trigger from a Zoho CRM workflow
   workflow_dispatch: {}         # manual "Run workflow" button

@@ -24,7 +24,7 @@ node build.mjs && python3 -m http.server -d dist 8000
 ```
 
 ## Zoho sync
-`.github/workflows/sync-zoho.yml` runs `scripts/sync-zoho.mjs` every hour, on demand, and when Zoho sends a `zoho-update` event.
+`.github/workflows/sync-zoho.yml` runs `scripts/sync-zoho.mjs` every 3 hours, on demand, and when Zoho sends a `zoho-update` event.
 It reads records with **Show on Website** ticked from Zoho CRM (Center_Events, Website_Albums, Website_News),
 writes `data/*.json`, downloads photos, and commits — which makes Cloudflare rebuild the site.
 
