@@ -12,7 +12,9 @@ Content lives in `data/`:
 - `events.json` — competitions & events (status: `published` / `hidden`)
 - `news.json` — news
 - `albums.json` — photo albums
-- `site.json` — centres, contact, social accounts
+- `site.json` — centres, contact, member portal link
+- `khobar.json` — Khobar packages, schedule, conditions
+- `people.json`, `coaches.json`, `partners.json` — team, coaches, clubs & partners
 
 **Next phase:** these files are filled automatically from Zoho CRM (Events / News / Albums modules) and album photos come from Google Drive folders, so staff only work in Zoho.
 

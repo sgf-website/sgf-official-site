@@ -1,0 +1,13 @@
+[
+  {"name": "د. أمل زكريا", "role": "المدير الفني", "centre": "khobar"},
+  {"name": "د. آية الجنزوري", "role": "مدربة جمباز", "centre": "khobar"},
+  {"name": "هدير فهمي", "role": "مدربة جمباز", "centre": "khobar"},
+  {"name": "هدى رمزي", "role": "مدربة جمباز", "centre": "khobar"},
+  {"name": "رانيا إبراهيم", "role": "مدربة جمباز", "centre": "khobar"},
+  {"name": "عزت سعد", "role": "المدير الفني", "centre": "riyadh"},
+  {"name": "أنيس عز الدين", "role": "مدرب جمباز", "centre": "riyadh"},
+  {"name": "هناء السيد", "role": "مدربة جمباز", "centre": "riyadh"},
+  {"name": "ماجدة أحمد", "role": "مدربة جمباز", "centre": "riyadh"},
+  {"name": "نورهان خالد", "role": "مدربة جمباز", "centre": "riyadh"},
+  {"name": "شيماء إبراهيم", "role": "مدربة جمباز", "centre": "riyadh"}
+]

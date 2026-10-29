@@ -50,3 +50,17 @@ if (grid && box) {
     if (e.key === 'ArrowRight') show(i - 1);
   });
 }
+
+// Dropdown menus (click / keyboard)
+document.querySelectorAll('.dd').forEach((dd) => {
+  const btn = dd.querySelector('.dd-btn');
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = !dd.classList.contains('open');
+    document.querySelectorAll('.dd.open').forEach((o) => { o.classList.remove('open'); o.querySelector('.dd-btn').setAttribute('aria-expanded', 'false'); });
+    dd.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  });
+});
+document.addEventListener('click', () => document.querySelectorAll('.dd.open').forEach((o) => o.classList.remove('open')));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.dd.open').forEach((o) => o.classList.remove('open')); });

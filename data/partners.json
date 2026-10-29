@@ -1,0 +1,8 @@
+{
+  "clubs": [
+    {"name": "نادي الاتفاق", "centre": "khobar", "days": "الأحد والأربعاء"},
+    {"name": "نادي الثقبة", "centre": "khobar", "days": "الإثنين والخميس"},
+    {"name": "نادي النهضة", "centre": "khobar", "days": "الثلاثاء والسبت"}
+  ],
+  "partners": []
+}
