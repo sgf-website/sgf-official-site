@@ -69,6 +69,7 @@ async function driveImages(folder) {
   if (!GKEY || !folder) return [];
   const q = encodeURIComponent(`'${folder}' in parents and mimeType contains 'image/' and trashed = false`);
   const j = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&orderBy=name&pageSize=500&key=${GKEY}`).then((x) => x.json());
+  if (j.error) console.log(`::warning title=Google Drive::${j.error.message}`);
   return j.files || [];
 }
 
@@ -96,8 +97,11 @@ async function main() {
       photos = []; photo_dir = `/assets/img/albums/${slug}/`;
       for (const f of await driveImages(folder)) {
         const name = f.name.replace(/\.[^.]+$/, '').replace(/[^A-Za-z0-9_-]+/g, '_');
-        const buf = Buffer.from(await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media&key=${GKEY}`).then((x) => x.arrayBuffer()));
-        await saveImage(buf, `img/albums/${slug}`, name); photos.push(name);
+        try {
+          const res = await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media&key=${GKEY}`);
+          if (!res.ok) throw new Error(`Drive ${res.status}`);
+          await saveImage(Buffer.from(await res.arrayBuffer()), `img/albums/${slug}`, name); photos.push(name);
+        } catch (err) { console.warn(`skipped photo ${f.name}: ${err.message}`); }
       }
     }
     const unchanged = prev.zoho_modified === r.Modified_Time;
