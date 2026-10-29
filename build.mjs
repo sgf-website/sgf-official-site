@@ -118,9 +118,10 @@ ${body}
 }
 
 // ---------- components ----------
+const RINGS = `<span class="fx" aria-hidden="true"><i class="r1"></i><i class="r2"></i><i class="r3"></i><i class="r4"></i><i class="r5"></i>${Array.from({ length: 10 }, (_, i) => `<b style="left:${(i * 11 + 4) % 100}%;bottom:${(i * 17) % 50}%;animation-delay:-${(i * 0.6).toFixed(1)}s"></b>`).join('')}</span>`;
 const ph = `<img class="ph" src="/assets/img/sgf_emblem.png" alt="" aria-hidden="true">`;
 const secHead = (eyebrow, title, sub = '') => `<div class="sec-head"><p class="eyebrow">${eyebrow}</p><h2>${title}</h2>${sub ? `<p class="sub">${sub}</p>` : ''}</div>`;
-const pageHero = ({ crumbs = [], title, sub = '', extra = '' }) => `<section class="page-hero">${crumbs.length ? `<div class="crumbs">${[['/', t('الرئيسية', 'Home')], ...crumbs].map(([h, l]) => `<a href="${u(h)}">${l}</a>`).join(' › ')}</div>` : ''}<h1>${esc(title)}</h1>${sub ? `<p>${sub}</p>` : ''}${extra}</section>`;
+const pageHero = ({ crumbs = [], title, sub = '', extra = '' }) => `<section class="page-hero">${RINGS}<div class="ph-inner">${crumbs.length ? `<div class="crumbs">${[['/', t('الرئيسية', 'Home')], ...crumbs].map(([h, l]) => `<a href="${u(h)}">${l}</a>`).join(' › ')}</div>` : ''}<h1>${esc(title)}</h1>${sub ? `<p>${sub}</p>` : ''}${extra}</div></section>`;
 const tabs = (label, items, active) => `<nav class="tabs" aria-label="${label}">${items.map(([k, h, l]) => `<a href="${u(h)}"${k === active ? ' aria-current="page"' : ''}>${l}</a>`).join('')}</nav>`;
 const mediaTabs = (active) => tabs(t('أقسام المركز الإعلامي', 'Media sections'), [['hub', '/media/', t('الكل', 'All')], ['events', '/events/', t('البطولات والفعاليات', 'Competitions & Events')], ['news', '/news/', t('الأخبار', 'News')], ['gallery', '/gallery/', t('معرض الصور', 'Photo Gallery')]], active);
 const aboutTabs = (active) => tabs(t('أقسام عن الاتحاد', 'About sections'), [['team', '/about/team/', t('مجلس الإدارة والفريق', 'Board & Team')], ['coaches', '/about/coaches/', t('المدربون', 'Coaches')], ['partners', '/about/partners/', t('الأندية والشركاء', 'Clubs & Partners')]], active);
@@ -322,7 +323,7 @@ function centrePage(c) {
   const cAlbums = albums.filter((a) => a.centre === c.slug).slice(0, 3);
   const cNews = news.filter((n) => n.centre === c.slug).slice(0, 3);
 
-  const hero = `<section class="hero centre-hero" style="--c:${c.color}"><img class="emblem" src="/assets/img/sgf_emblem.png" alt="" aria-hidden="true"><span class="ring r1"></span><span class="ring r2"></span><div class="inner">
+  const hero = `<section class="hero centre-hero" style="--c:${c.color}">${RINGS}<div class="inner">
   <div class="crumbs"><a href="${u('/')}">${t('الرئيسية', 'Home')}</a> › <a href="${u('/#centres')}">${t('مراكز التدريب', 'Training Centres')}</a></div>
   <h1>${f(c, 'name')}</h1><p class="sub">${isKhobar ? k.hero_sub : t('تدريب الجمباز بإشراف مدربي الاتحاد', 'Gymnastics training with federation coaches')}</p>
   <p class="place">${esc(f(c, 'address'))}${isKhobar ? ' · ' + k.founded : ''}</p>
@@ -367,7 +368,7 @@ function centrePage(c) {
 
 
 function soonCentrePage(c) {
-  const body = `<section class="hero centre-hero" style="--c:${c.color}"><img class="emblem" src="/assets/img/sgf_emblem.png" alt="" aria-hidden="true"><span class="ring r1"></span><span class="ring r2"></span><div class="inner">
+  const body = `<section class="hero centre-hero" style="--c:${c.color}">${RINGS}<div class="inner">
   <div class="crumbs"><a href="${u('/')}">${t('الرئيسية', 'Home')}</a> › <a href="${u('/#centres')}">${t('مراكز التدريب', 'Training Centres')}</a></div>
   <h1>${f(c, 'name')}</h1><p class="sub">${t('قريبًا', 'Coming soon')}</p>
   <p class="place">${t('نعمل على افتتاح مركز تدريب الاتحاد في جدة. تابعنا لمعرفة موعد الافتتاح والتسجيل.', "We are preparing to open the federation's training centre in Jeddah. Follow us for the opening date and registration.")}</p>

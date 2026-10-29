@@ -293,3 +293,19 @@ html[lang="en"] .hero .emblem,html[lang="en"] .hx .emblem{left:auto;right:-60px}
 .strip .s3{grid-row:span 2}
 @media (max-width:700px){.strip{grid-template-columns:repeat(2,1fr);grid-auto-rows:120px}.strip .s3{grid-row:auto}.strip .s5,.strip .s6{display:none}}
 .soon-badge{font-size:11px;font-weight:600;background:#E4E9E6;color:var(--muted);padding:1px 8px;border-radius:999px;margin-inline-start:6px}
+
+/* ---- Animated rings (option A) for inner-page headers ---- */
+.page-hero,.centre-hero{position:relative;overflow:hidden;isolation:isolate;background:radial-gradient(1100px 520px at 50% 130%,#0E6B50 0%,#0A5640 45%,#063A2B 100%)}
+.ph-inner{position:relative;z-index:2}
+.centre-hero .inner{z-index:2}
+.fx{position:absolute;inset:0;z-index:0;pointer-events:none}
+.fx i{position:absolute;border-radius:50%;border:3px solid;opacity:.5;animation:fxfloat 15s ease-in-out infinite}
+.fx .r1{width:340px;height:340px;border-color:#FFA500;left:-90px;top:-120px}
+.fx .r2{width:260px;height:260px;border-color:#EB0045;left:12%;bottom:-160px;animation-delay:-3s;animation-duration:18s}
+.fx .r3{width:280px;height:280px;border-color:#0075C9;right:-70px;top:-60px;animation-delay:-6s;animation-duration:20s}
+.fx .r4{width:180px;height:180px;border-color:#7FD1AE;right:14%;bottom:-90px;animation-delay:-9s;animation-duration:16s}
+.fx .r5{width:110px;height:110px;border-color:#FFA500;right:40%;top:-50px;animation-delay:-2s;animation-duration:12s;opacity:.3}
+.fx b{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;opacity:0;animation:fxspark 7s linear infinite}
+@keyframes fxfloat{0%,100%{transform:translate(0,0) rotate(0)}33%{transform:translate(26px,-18px) rotate(8deg)}66%{transform:translate(-18px,14px) rotate(-6deg)}}
+@keyframes fxspark{0%{opacity:0;transform:translateY(0)}20%{opacity:.7}100%{opacity:0;transform:translateY(-120px)}}
+@media (prefers-reduced-motion:reduce){.fx i,.fx b{animation:none}}
