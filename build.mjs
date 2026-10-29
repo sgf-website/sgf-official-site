@@ -40,9 +40,7 @@ const NAV = [
   { href: '/', label: 'الرئيسية', key: 'home' },
   { label: 'عن الاتحاد', key: 'about', children: [['/about/team/', 'مجلس الإدارة والفريق'], ['/about/coaches/', 'المدربون'], ['/about/partners/', 'الأندية والشركاء']] },
   { label: 'مراكز التدريب', key: 'centres', children: [...liveCentres.map((c) => [`/centres/${c.slug}/`, c.name]), ['/#centres', 'كل المراكز']] },
-  { href: '/events/', label: 'البطولات والفعاليات', key: 'events' },
-  { href: '/news/', label: 'الأخبار', key: 'news' },
-  { href: '/gallery/', label: 'معرض الصور', key: 'gallery' },
+  { label: 'المركز الإعلامي', key: 'media', children: [['/events/', 'البطولات والفعاليات'], ['/news/', 'الأخبار'], ['/gallery/', 'معرض الصور'], ['/media/', 'كل المحتوى الإعلامي']] },
 ];
 
 function navHtml(active) {
@@ -90,7 +88,7 @@ ${body}
     <div class="cols">
       <div class="col"><img src="/assets/img/sgf_logo_horizontal_white.png" alt="${esc(site.name)}"><p style="margin:0">نطوّر رياضة الجمباز في المملكة من المراكز إلى المنتخبات.</p></div>
       <div class="col"><p class="h">عن الاتحاد</p><a href="/about/team/">مجلس الإدارة والفريق</a><a href="/about/coaches/">المدربون</a><a href="/about/partners/">الأندية والشركاء</a></div>
-      <div class="col"><p class="h">روابط</p><a href="/events/">البطولات والفعاليات</a><a href="/news/">الأخبار</a><a href="/gallery/">معرض الصور</a><a href="${site.register_url}">التسجيل</a><a href="${site.portal.url}">${site.portal.label}</a></div>
+      <div class="col"><p class="h">المركز الإعلامي</p><a href="/events/">البطولات والفعاليات</a><a href="/news/">الأخبار</a><a href="/gallery/">معرض الصور</a><a href="${site.register_url}">التسجيل</a><a href="${site.portal.url}">${site.portal.label}</a></div>
       <div class="col"><p class="h">تواصل معنا</p>
         ${liveCentres.map((c) => `<span>${c.name}: <a href="${wa(c)}"><bdi dir="ltr">${c.whatsapp_label}</bdi></a></span>`).join('')}
       </div>
@@ -107,6 +105,8 @@ ${body}
 const ph = `<img class="ph" src="/assets/img/sgf_emblem.png" alt="" aria-hidden="true">`;
 const secHead = (eyebrow, title, sub = '') => `<div class="sec-head"><p class="eyebrow">${eyebrow}</p><h2>${title}</h2>${sub ? `<p class="sub">${sub}</p>` : ''}</div>`;
 const pageHero = ({ crumbs = [], title, sub = '', extra = '' }) => `<section class="page-hero">${crumbs.length ? `<div class="crumbs">${[['/', 'الرئيسية'], ...crumbs].map(([h, l]) => `<a href="${h}">${l}</a>`).join(' › ')}</div>` : ''}<h1>${esc(title)}</h1>${sub ? `<p>${sub}</p>` : ''}${extra}</section>`;
+const mediaTabs = (active) => `<nav class="tabs" aria-label="أقسام المركز الإعلامي">${[['hub', '/media/', 'الكل'], ['events', '/events/', 'البطولات والفعاليات'], ['news', '/news/', 'الأخبار'], ['gallery', '/gallery/', 'معرض الصور']].map(([k, h, l]) => `<a href="${h}"${k === active ? ' aria-current="page"' : ''}>${l}</a>`).join('')}</nav>`;
+const MEDIA = ['/media/', 'المركز الإعلامي'];
 const aboutTabs = (active) => `<nav class="tabs" aria-label="أقسام عن الاتحاد">${[['team', '/about/team/', 'مجلس الإدارة والفريق'], ['coaches', '/about/coaches/', 'المدربون'], ['partners', '/about/partners/', 'الأندية والشركاء']].map(([k, h, l]) => `<a href="${h}"${k === active ? ' aria-current="page"' : ''}>${l}</a>`).join('')}</nav>`;
 
 function eventCard(e) {
@@ -308,9 +308,28 @@ function partnersPage() {
 
 function eventsIndex() {
   const keys = [...new Set(events.map((e) => e.centre))].filter((k) => site.centres[k]);
-  const body = pageHero({ title: 'البطولات والفعاليات', sub: 'مواعيد البطولات والفعاليات في مراكز الاتحاد، ونتائجها وصورها.' }) +
-    `<section class="section" style="padding-top:40px"><div class="wrap">${filterBar(keys)}<div class="grid" data-filterable>${events.map(eventCard).join('')}</div></div></section>`;
-  return layout({ title: 'البطولات والفعاليات', active: 'events', body });
+  const up = events.filter((e) => (e.date_end || e.date) >= today).reverse();
+  const past = events.filter((e) => !up.includes(e));
+  const upHtml = up.length ? `<div class="grid" data-filterable>${up.map(eventCard).join('')}</div>` : `<div class="notice">لا توجد بطولات أو فعاليات قادمة معلنة حاليًا — تابعنا قريبًا.</div>`;
+  const body = pageHero({ crumbs: [MEDIA], title: 'البطولات والفعاليات', sub: 'مواعيد البطولات والفعاليات في مراكز الاتحاد، ونتائجها وصورها.', extra: mediaTabs('events') }) +
+    `<section class="section" style="padding-top:40px"><div class="wrap">${filterBar(keys)}
+    <div class="group-head"><h2>القادمة</h2><span></span></div>${upHtml}
+    <div class="group-head" style="margin-top:48px"><h2>السابقة</h2><span></span></div><div class="grid" data-filterable>${past.map(eventCard).join('')}</div>
+    </div></section>`;
+  return layout({ title: 'البطولات والفعاليات', active: 'media', body });
+}
+
+function mediaHub() {
+  const up = events.filter((e) => (e.date_end || e.date) >= today).reverse();
+  const past = events.filter((e) => !up.includes(e));
+  const block = (title, href, all, cards) => `<section class="section tight"><div class="wrap"><div class="group-head"><h2>${title}</h2><span></span><a class="btn btn-soft" href="${href}">${all}</a></div>${cards}</div></section>`;
+  const body = pageHero({ title: 'المركز الإعلامي', sub: 'كل ما يخص البطولات والفعاليات والأخبار وصور الاتحاد ومراكزه في مكان واحد.', extra: mediaTabs('hub') }) +
+    block('البطولات والفعاليات القادمة', '/events/', 'كل البطولات', up.length ? `<div class="grid">${up.slice(0, 3).map(eventCard).join('')}</div>` : `<div class="notice">لا توجد فعاليات قادمة معلنة حاليًا.</div>`) +
+    block('آخر الأخبار', '/news/', 'كل الأخبار', `<div class="grid">${news.slice(0, 3).map(newsCard).join('')}</div>`) +
+    block('أحدث الألبومات', '/gallery/', 'معرض الصور', `<div class="grid">${albums.slice(0, 3).map(albumCard).join('')}</div>`) +
+    block('بطولات سابقة', '/events/', 'الأرشيف', `<div class="grid">${past.slice(0, 3).map(eventCard).join('')}</div>`) +
+    '<div style="height:60px"></div>';
+  return layout({ title: 'المركز الإعلامي', active: 'media', body });
 }
 
 function eventPage(e) {
@@ -323,7 +342,7 @@ function eventPage(e) {
     `<a class="btn btn-soft" href="/events/">كل البطولات</a>`,
   ].filter(Boolean).join('');
   const preview = album ? `<h2 style="font-size:20px;margin:28px 0 12px">من الصور</h2><div class="photos">${album.photos.slice(0, 6).map((p) => `<a href="/gallery/${album.slug}/" class="thumb"><img src="${album.photo_dir}${p}-sm.webp" alt="" loading="lazy"></a>`).join('')}</div>` : '';
-  const body = pageHero({ crumbs: [['/events/', 'البطولات والفعاليات']], title: e.title }) + `
+  const body = pageHero({ crumbs: [MEDIA, ['/events/', 'البطولات والفعاليات']], title: e.title }) + `
 <div class="wrap"><article class="article">
   ${e.cover ? `<div class="cover"><img src="${esc(e.cover)}" alt="${esc(e.title)}"></div>` : ''}
   <div class="content">
@@ -333,38 +352,38 @@ function eventPage(e) {
     ${preview}
   </div>
 </article></div>`;
-  return layout({ title: e.title, desc: e.summary, active: 'events', body });
+  return layout({ title: e.title, desc: e.summary, active: 'media', body });
 }
 
 function newsIndex() {
-  const body = pageHero({ title: 'الأخبار', sub: 'آخر أخبار الاتحاد ومراكز التدريب.' }) + `<section class="section" style="padding-top:40px"><div class="wrap"><div class="grid">${news.map(newsCard).join('')}</div></div></section>`;
-  return layout({ title: 'الأخبار', active: 'news', body });
+  const body = pageHero({ crumbs: [MEDIA], title: 'الأخبار', sub: 'آخر أخبار الاتحاد ومراكز التدريب.', extra: mediaTabs('news') }) + `<section class="section" style="padding-top:40px"><div class="wrap"><div class="grid">${news.map(newsCard).join('')}</div></div></section>`;
+  return layout({ title: 'الأخبار', active: 'media', body });
 }
 
 function newsPage(n) {
   const links = (n.links || []).map((l) => `<a class="btn btn-soft" href="${esc(l.href)}">${esc(l.label)}</a>`).join('');
-  const body = pageHero({ crumbs: [['/news/', 'الأخبار']], title: n.title, sub: esc(fmtDate(n.date)) }) +
+  const body = pageHero({ crumbs: [MEDIA, ['/news/', 'الأخبار']], title: n.title, sub: esc(fmtDate(n.date)) }) +
     `<div class="wrap"><article class="article">${n.cover ? `<div class="cover"><img src="${esc(n.cover)}" alt=""></div>` : ''}<div class="content">${n.body}<div class="links">${links}</div></div></article></div>`;
-  return layout({ title: n.title, desc: n.summary, active: 'news', body });
+  return layout({ title: n.title, desc: n.summary, active: 'media', body });
 }
 
 function galleryIndex() {
   const keys = [...new Set(albums.map((a) => a.centre))].filter((k) => site.centres[k]);
-  const body = pageHero({ title: 'معرض الصور', sub: 'صور البطولات والفعاليات في مراكز الاتحاد.' }) +
+  const body = pageHero({ crumbs: [MEDIA], title: 'معرض الصور', sub: 'صور البطولات والفعاليات في مراكز الاتحاد.', extra: mediaTabs('gallery') }) +
     `<section class="section" style="padding-top:40px"><div class="wrap">${keys.length > 1 ? filterBar(keys) : ''}<div class="grid" data-filterable>${albums.map(albumCard).join('')}</div></div></section>`;
-  return layout({ title: 'معرض الصور', active: 'gallery', body });
+  return layout({ title: 'معرض الصور', active: 'media', body });
 }
 
 function albumPage(a) {
   const ev = events.find((e) => e.slug === a.event);
   const photos = a.photos.map((p, i) => `<button type="button" data-full="${a.photo_dir}${p}.webp" aria-label="صورة ${i + 1} من ${a.photos.length}"><img src="${a.photo_dir}${p}-sm.webp" alt="" loading="lazy"></button>`).join('');
-  const body = pageHero({ crumbs: [['/gallery/', 'معرض الصور']], title: a.title, sub: esc(a.description) }) + `
+  const body = pageHero({ crumbs: [MEDIA, ['/gallery/', 'معرض الصور']], title: a.title, sub: esc(a.description) }) + `
 <section class="section" style="padding-top:40px"><div class="wrap">
   <div class="chips"><span class="tag">🖼 ${a.photos.length} صورة</span><span class="tag">📅 ${esc(fmtDate(a.date))}</span>${ev ? `<a class="btn btn-soft" href="/events/${ev.slug}/">صفحة البطولة</a>` : ''}</div>
   <div class="photos" data-lightbox>${photos}</div>
 </div></section>
 <div class="lightbox" role="dialog" aria-modal="true" aria-label="عارض الصور"><img alt=""><button class="close" aria-label="إغلاق">✕</button><button class="prev" aria-label="السابقة">›</button><button class="next" aria-label="التالية">‹</button><span class="count"></span></div>`;
-  return layout({ title: a.title, desc: a.description, active: 'gallery', body });
+  return layout({ title: a.title, desc: a.description, active: 'media', body });
 }
 
 
@@ -408,6 +427,7 @@ put('about/partners/index.html', partnersPage());
 put('events/index.html', eventsIndex());
 events.forEach((e) => put(`events/${e.slug}/index.html`, eventPage(e)));
 put('news/index.html', newsIndex());
+put('media/index.html', mediaHub());
 news.forEach((n) => put(`news/${n.slug}/index.html`, newsPage(n)));
 put('gallery/index.html', galleryIndex());
 albums.forEach((a) => put(`gallery/${a.slug}/index.html`, albumPage(a)));
