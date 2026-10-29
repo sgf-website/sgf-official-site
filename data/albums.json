@@ -3,9 +3,11 @@
     "slug": "gfa-central-region-2026",
     "status": "published",
     "title": "بطولة الجمباز للجميع — المنطقة الوسطى 2026",
+    "title_en": "Gymnastics for All Championship — Central Region 2026",
     "date": "2026-09-01",
     "centre": "riyadh",
     "description": "عروض الفرق المشاركة، وتشجيع الجماهير، وتتويج الفائزين في بطولة الجمباز للجميع للمنطقة الوسطى (1–3 سبتمبر 2026) بمركز تدريب الرياض.",
+    "description_en": "Team routines, cheering families and the winners' ceremony at the Gymnastics for All Championship for the Central Region (1–3 September 2026), Riyadh Training Centre.",
     "cover": "DSC00565",
     "event": "gfa-central-region-2026",
     "photo_dir": "/assets/img/gfa2026/",
@@ -40,6 +42,6 @@
       "DSC01819"
     ],
     "drive_folder": "1Dp_ICQTI2ptNM1XmCK_GuSWpJw9c7obd",
-    "zoho_modified": "2026-10-29T16:28:20+03:00"
+    "zoho_modified": "2026-10-30T00:31:20+03:00"
   }
 ]

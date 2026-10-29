@@ -3,21 +3,26 @@
     "slug": "gfa-central-region-2026-results",
     "status": "published",
     "title": "اختتام بطولة الجمباز للجميع للمنطقة الوسطى 2026",
+    "title_en": "Gymnastics for All Championship — Central Region 2026 concludes",
     "date": "2026-09-03",
     "centre": "riyadh",
     "summary": "اختُتمت في مركز تدريب الرياض بطولة الجمباز للجميع للمنطقة الوسطى بتتويج أصحاب المراكز الثلاثة الأولى، بعد ثلاثة أيام من العروض الجماعية.",
+    "summary_en": "The Gymnastics for All Championship for the Central Region concluded at the Riyadh Training Centre with awards for the top three, after three days of group routines.",
     "body": "<p>اختُتمت في مركز تدريب الرياض بطولة الجمباز للجميع للمنطقة الوسطى 2026، التي أُقيمت خلال الفترة من 1 إلى 3 سبتمبر، بمشاركة فرق قدّمت عروضًا جماعية أمام جمهور كبير من الأهالي.</p><p>وتُوّج أصحاب المراكز الثلاثة الأولى في ختام البطولة.</p>",
+    "body_en": "<p>The 2026 Gymnastics for All Championship for the Central Region concluded at the Riyadh Training Centre. Held from 1 to 3 September, it brought together teams that performed group routines in front of a large audience of families.</p><p>The top three teams received their awards at the closing ceremony.</p>",
     "cover": "/assets/img/gfa2026/DSC01789.webp",
     "links": [
       {
         "label": "ألبوم الصور",
+        "label_en": "Photo album",
         "href": "/gallery/gfa-central-region-2026/"
       },
       {
         "label": "صفحة البطولة",
+        "label_en": "Event page",
         "href": "/events/gfa-central-region-2026/"
       }
     ],
-    "zoho_modified": "2026-10-29T16:28:34+03:00"
+    "zoho_modified": "2026-10-30T00:31:22+03:00"
   }
 ]
