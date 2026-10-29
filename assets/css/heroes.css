@@ -54,3 +54,4 @@
 @media (max-width:880px){.hx-d .split{grid-template-columns:1fr;text-align:center}.hx-d .split .txt{align-items:center}.hx-d .mosaic{transform:none;grid-auto-rows:90px}}
 
 @media (prefers-reduced-motion:reduce){.hx *{animation:none!important}.hx-b .slides img:first-child{opacity:1}.hx-c path{stroke-dashoffset:0}}
+.home-hero .inner{padding-bottom:130px}

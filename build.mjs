@@ -183,7 +183,7 @@ function home() {
     ['#0A5640', 'مراكز التدريب', 'اختر المركز الأقرب إليك: الخبر، الرياض، وقريبًا جدة.', '#centres', 'عرض المراكز'],
   ].map(([c, t, d, h, l]) => `<article style="--c:${c}"><h3>${t}</h3><p>${d}</p><a class="btn btn-soft" href="${h}">${l}</a></article>`).join('');
   const body = `
-<section class="hero"><img class="emblem" src="/assets/img/sgf_emblem.png" alt="" aria-hidden="true"><div class="inner">
+<section class="hx hx-b home-hero"><div class="slides">${['DSC01789', 'DSC00565', 'DSC01611', 'DSC01024'].map((p, i) => `<img src="/assets/img/gfa2026/${p}.webp" alt="" aria-hidden="true"${i ? ' loading="lazy"' : ' fetchpriority="high"'}>`).join('')}</div><div class="inner">
   <h1>${esc(site.name)}</h1><p class="sub">${esc(site.tagline)}</p>
   <div class="actions"><a class="btn btn-accent" href="#centres">مراكز التدريب</a><a class="btn btn-ghost" href="/events/">جداول البطولات</a></div>
 </div></section>
@@ -222,7 +222,7 @@ ${portalBand()}
     <a href="/about/partners/"><span class="t">الأندية والشركاء</span><span class="d">الأندية المعتمدة والشركاء والرعاة.</span><span class="m">عرض الشركاء ←</span></a>
   </div>
 </div></section>`;
-  return layout({ title: site.name, active: 'home', body });
+  return layout({ title: site.name, active: 'home', body, extraHead: '<link rel="stylesheet" href="/assets/css/heroes.css"><link rel="preload" as="image" href="/assets/img/gfa2026/DSC01789.webp">' });
 }
 
 function centrePage(c) {
