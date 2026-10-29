@@ -1,0 +1,15 @@
+{
+  "name": "الاتحاد السعودي للجمباز",
+  "tagline": "بوابتك إلى رياضة الجمباز في المملكة",
+  "register_url": "https://zfrmz.com/AUTP7NlWXFKdvTj5ey7C",
+  "centres": {
+    "khobar": {"name": "مركز تدريب الخبر", "short": "الخبر", "color": "#EB0045", "address": "مدينة الأمير سعود بن جلوي الرياضية — الراكة", "hours": "4:00 م – 8:00 م", "days": "يوميًا عدا الجمعة", "whatsapp": "966534866652", "whatsapp_label": "053 486 6652", "instagram": "saudigym.dmm"},
+    "riyadh": {"name": "مركز تدريب الرياض", "short": "الرياض", "color": "#0075C9", "address": "[عنوان المركز]", "hours": "4:00 م – 8:00 م", "days": "يوميًا عدا الجمعة", "whatsapp": "966501134582", "whatsapp_label": "050 113 4582", "instagram": "sgf.riyadh"},
+    "federation": {"name": "الاتحاد السعودي للجمباز", "short": "الاتحاد", "color": "#0A5640"}
+  },
+  "social": {
+    "x": "",
+    "snapchat": "",
+    "instagram": "saudigymnastics"
+  }
+}
