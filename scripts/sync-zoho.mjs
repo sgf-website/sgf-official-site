@@ -74,6 +74,13 @@ async function driveImages(folder) {
 }
 
 async function main() {
+  if (process.env.DRIVE_TEST === 'true') {
+    for (const a of readJson('albums.json', [])) {
+      const files = await driveImages(a.drive_folder);
+      console.log(`::notice title=Drive test::${a.slug}: Google Drive returned ${files.length} photos (key ${GKEY ? 'present' : 'missing'})`);
+    }
+    return;
+  }
   if (!process.env.ZOHO_REFRESH_TOKEN) { console.log('Zoho secrets not set yet — skipping sync.'); return; }
   TOKEN = await token();
   const prevEvents = Object.fromEntries(readJson('events.json', []).map((e) => [e.slug, e]));

@@ -4,7 +4,12 @@ on:
     - cron: '15 */3 * * *'     # every 3 hours (safety net; Zoho also triggers instantly)
   repository_dispatch:
     types: [zoho-update]        # instant trigger from a Zoho CRM workflow
-  workflow_dispatch: {}         # manual "Run workflow" button
+  workflow_dispatch:            # manual "Run workflow" button
+    inputs:
+      drive_test:
+        description: 'Only test the Google Drive key (no changes)'
+        type: boolean
+        default: false
 permissions:
   contents: write
 concurrency:
@@ -26,6 +31,7 @@ jobs:
           ZOHO_ACCOUNTS_URL: ${{ vars.ZOHO_ACCOUNTS_URL }}
           ZOHO_API_URL: ${{ vars.ZOHO_API_URL }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          DRIVE_TEST: ${{ inputs.drive_test }}
       - name: Commit changes (triggers Cloudflare rebuild)
         run: |
           git config user.name "sgf-website-bot"
