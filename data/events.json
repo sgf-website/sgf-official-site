@@ -13,7 +13,8 @@
     "cover": "/assets/img/gfa2026/DSC01819.webp",
     "album": "gfa-central-region-2026",
     "video": "https://drive.google.com/file/d/1QQPMdV3SAcBYF9VzVzLrjTleGbeo9U9e/view",
-    "register_link": ""
+    "register_link": "",
+    "zoho_modified": "2026-10-29T16:28:11+03:00"
   },
   {
     "slug": "friendly-2024",
@@ -22,13 +23,16 @@
     "title": "البطولة الودية 2024",
     "date": "2024-01-01",
     "date_label": "2024",
+    "date_end": "",
     "centre": "khobar",
     "location": "مركز تدريب الخبر — الراكة",
     "summary": "بطولة سنوية مجانية للاعبي ولاعبات المركز، مع جوائز وتكريم لكل المشاركين.",
     "details": "<p>أقيمت البطولة الودية السنوية للاعبي ولاعبات مركز تدريب الخبر، وتم تكريم جميع المشاركين.</p>",
     "cover": "",
     "album": "",
-    "register_link": ""
+    "video": "",
+    "register_link": "",
+    "zoho_modified": "2026-10-29T16:28:11+03:00"
   },
   {
     "slug": "friendly-2023",
@@ -37,12 +41,15 @@
     "title": "البطولة الودية 2023",
     "date": "2023-01-01",
     "date_label": "2023",
+    "date_end": "",
     "centre": "khobar",
     "location": "مركز تدريب الخبر — الراكة",
     "summary": "البطولة الودية السنوية للاعبي المركز، مع منصة تتويج وشهادات مشاركة.",
     "details": "<p>البطولة الودية السنوية للاعبي ولاعبات مركز تدريب الخبر، مع منصة تتويج وشهادات مشاركة لكل اللاعبين.</p>",
     "cover": "",
     "album": "",
-    "register_link": ""
+    "video": "",
+    "register_link": "",
+    "zoho_modified": "2026-10-29T16:28:11+03:00"
   }
 ]
