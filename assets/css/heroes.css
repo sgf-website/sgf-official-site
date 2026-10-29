@@ -1,0 +1,56 @@
+/* ===== Hero options (preview) ===== */
+.hx{position:relative;overflow:hidden;color:#fff;text-align:center;isolation:isolate;min-height:520px;display:flex;align-items:center;justify-content:center}
+.hx .inner{position:relative;z-index:3;max-width:860px;padding:90px 24px 110px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.hx h1{font-weight:800;font-size:clamp(32px,5vw,56px);text-shadow:0 2px 18px rgba(0,0,0,.18)}
+.hx .sub{font-family:var(--head);font-weight:800;font-size:clamp(19px,2.6vw,27px);color:var(--orange);margin:0}
+.hx .actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:12px}
+.opt-label{position:absolute;top:16px;inset-inline-end:16px;z-index:5;background:#fff;color:var(--green);font-weight:700;font-size:14px;padding:6px 14px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.opt-desc{max-width:900px;margin:14px auto 46px;padding:0 24px;text-align:center;color:var(--muted);font-size:15px}
+
+/* A — floating brand rings */
+.hx-a{background:radial-gradient(1200px 600px at 50% 120%,#0E6B50 0%,#0A5640 45%,#063A2B 100%)}
+.hx-a .ring{position:absolute;border-radius:50%;border:4px solid;opacity:.55;mix-blend-mode:screen;animation:float 14s ease-in-out infinite}
+.hx-a .r1{width:420px;height:420px;border-color:#FFA500;left:-80px;top:-60px}
+.hx-a .r2{width:340px;height:340px;border-color:#EB0045;left:120px;bottom:-140px;animation-delay:-3s;animation-duration:17s}
+.hx-a .r3{width:300px;height:300px;border-color:#0075C9;right:-60px;top:40px;animation-delay:-6s;animation-duration:19s}
+.hx-a .r4{width:220px;height:220px;border-color:#7FD1AE;right:160px;bottom:-60px;animation-delay:-9s;animation-duration:15s}
+.hx-a .r5{width:140px;height:140px;border-color:#FFA500;right:38%;top:-40px;animation-delay:-2s;animation-duration:12s;opacity:.35}
+@keyframes float{0%,100%{transform:translate(0,0) rotate(0)}33%{transform:translate(30px,-24px) rotate(8deg)}66%{transform:translate(-22px,18px) rotate(-6deg)}}
+.hx-a .spark{position:absolute;width:6px;height:6px;border-radius:50%;background:#fff;opacity:0;animation:spark 6s linear infinite}
+@keyframes spark{0%{opacity:0;transform:translateY(0)}20%{opacity:.8}100%{opacity:0;transform:translateY(-160px)}}
+
+/* B — photo slideshow (Ken Burns) */
+.hx-b{background:#063A2B}
+.hx-b .slides{position:absolute;inset:0;z-index:0}
+.hx-b .slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:kb 24s infinite}
+.hx-b .slides img:nth-child(2){animation-delay:6s}
+.hx-b .slides img:nth-child(3){animation-delay:12s}
+.hx-b .slides img:nth-child(4){animation-delay:18s}
+@keyframes kb{0%{opacity:0;transform:scale(1.02)}5%{opacity:1}25%{opacity:1}32%{opacity:0;transform:scale(1.14)}100%{opacity:0}}
+.hx-b::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(6,58,43,.72),rgba(10,86,64,.82))}
+
+/* C — gymnastics ribbon drawing */
+.hx-c{background:linear-gradient(120deg,#063A2B,#0A5640 40%,#0E6B50 70%,#0A5640);background-size:300% 300%;animation:grad 16s ease infinite}
+@keyframes grad{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hx-c svg{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.hx-c path{fill:none;stroke-linecap:round;stroke-dasharray:2600;stroke-dashoffset:2600;animation:draw 7s ease-in-out infinite alternate}
+.hx-c .p1{stroke:#FFA500;stroke-width:6;opacity:.7}
+.hx-c .p2{stroke:#EB0045;stroke-width:4;animation-delay:.8s;opacity:.65}
+.hx-c .p3{stroke:#4FB3FF;stroke-width:3;animation-delay:1.6s;opacity:.8}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* D — split: text + animated photo mosaic */
+.hx-d{background:var(--green);text-align:start;justify-content:stretch}
+.hx-d .split{position:relative;z-index:3;max-width:1200px;margin:0 auto;padding:64px 24px;display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;width:100%}
+.hx-d .split .txt{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.hx-d .split .txt p.lead{margin:0;color:#D7E8E0;font-size:17px;max-width:460px}
+.hx-d .mosaic{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:120px;gap:10px;transform:rotate(-3deg)}
+.hx-d .mosaic img{width:100%;height:100%;object-fit:cover;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.25);animation:bob 8s ease-in-out infinite}
+.hx-d .mosaic img:nth-child(1){grid-row:span 2}
+.hx-d .mosaic img:nth-child(4){grid-column:span 2}
+.hx-d .mosaic img:nth-child(2n){animation-delay:-4s}
+.hx-d .mosaic img:nth-child(3n){animation-delay:-2s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@media (max-width:880px){.hx-d .split{grid-template-columns:1fr;text-align:center}.hx-d .split .txt{align-items:center}.hx-d .mosaic{transform:none;grid-auto-rows:90px}}
+
+@media (prefers-reduced-motion:reduce){.hx *{animation:none!important}.hx-b .slides img:first-child{opacity:1}.hx-c path{stroke-dashoffset:0}}

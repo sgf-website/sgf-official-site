@@ -54,7 +54,7 @@ function navHtml(active) {
   }).join('');
 }
 
-function layout({ title, desc = site.tagline, active = '', body }) {
+function layout({ title, desc = site.tagline, active = '', body, extraHead = '' }) {
   return `<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -67,7 +67,7 @@ function layout({ title, desc = site.tagline, active = '', body }) {
 <link rel="icon" href="/assets/img/sgf_emblem.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/site.css">${extraHead}
 </head>
 <body>
 <div class="preview-bar">نسخة معاينة أولية — المحتوى والتصميم قابلان للتحديث</div>
@@ -367,6 +367,33 @@ function albumPage(a) {
   return layout({ title: a.title, desc: a.description, active: 'gallery', body });
 }
 
+
+function heroOptions() {
+  const dir = '/assets/img/gfa2026/';
+  const btns = `<div class="actions"><a class="btn btn-accent" href="#">مراكز التدريب</a><a class="btn btn-ghost" href="#">جداول البطولات</a></div>`;
+  const txt = `<h1>${esc(site.name)}</h1><p class="sub">${esc(site.tagline)}</p>${btns}`;
+  const sparks = Array.from({ length: 14 }, (_, i) => `<span class="spark" style="left:${(i * 7 + 5) % 100}%;bottom:${(i * 13) % 40}%;animation-delay:-${(i * 0.45).toFixed(2)}s"></span>`).join('');
+  const body = pageHero({ title: 'خيارات الواجهة الرئيسية', sub: 'أربعة تصاميم متحركة للقسم الأخضر أعلى الصفحة الرئيسية. اختر واحدًا (أ، ب، ج، د) أو اطلب دمج فكرتين.' }) + `
+<div style="height:36px"></div>
+<section class="hx hx-a"><span class="opt-label">الخيار أ — حلقات متحركة</span>${'<span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span><span class="ring r4"></span><span class="ring r5"></span>'}${sparks}<div class="inner">${txt}</div></section>
+<p class="opt-desc"><strong>أ — حلقات الهوية المتحركة:</strong> حلقات بألوان شعار الاتحاد تطفو وتدور ببطء، مع نقاط ضوء صاعدة. هادئ وأنيق ويعكس الهوية.</p>
+
+<section class="hx hx-b"><span class="opt-label">الخيار ب — صور البطولات</span><div class="slides">${['DSC01789', 'DSC00565', 'DSC01611', 'DSC01024'].map((p) => `<img src="${dir}${p}.webp" alt="" aria-hidden="true">`).join('')}</div><div class="inner">${txt}</div></section>
+<p class="opt-desc"><strong>ب — عرض صور البطولات:</strong> صور حقيقية من البطولات تتبدّل بتكبير بطيء تحت طبقة خضراء. الأكثر حيوية وقربًا من اللاعبين والأهالي، ويمكن تحديث الصور من ألبومات Zoho.</p>
+
+<section class="hx hx-c"><span class="opt-label">الخيار ج — شريط الجمباز الإيقاعي</span><svg viewBox="0 0 1440 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+<path class="p1" d="M-40 420 C 200 180, 380 560, 620 330 S 980 80, 1180 300 S 1420 520, 1520 260"/>
+<path class="p2" d="M-40 470 C 240 260, 420 600, 680 380 S 1020 140, 1220 360 S 1440 560, 1520 330"/>
+<path class="p3" d="M-40 140 C 160 260, 360 40, 560 180 S 900 340, 1100 160 S 1380 40, 1520 120"/>
+</svg><div class="inner">${txt}</div></section>
+<p class="opt-desc"><strong>ج — شريط الجمباز الإيقاعي:</strong> أشرطة ملوّنة تُرسم وتتحرك كشريط الجمباز الإيقاعي فوق خلفية خضراء متدرجة متحركة. فني ومميز وخفيف على الجوال.</p>
+
+<section class="hx hx-d"><span class="opt-label">الخيار د — نص وصور</span><div class="split"><div class="txt"><h1>${esc(site.name)}</h1><p class="sub">${esc(site.tagline)}</p><p class="lead">مراكز تدريب معتمدة في الخبر والرياض، وبطولات طوال العام للأطفال والسيدات.</p>${btns}</div>
+<div class="mosaic">${['DSC00546', 'DSC00712', 'DSC01819', 'DSC01221', 'DSC01480', 'DSC00923'].map((p) => `<img src="${dir}${p}-sm.webp" alt="" aria-hidden="true">`).join('')}</div></div></section>
+<p class="opt-desc"><strong>د — نص مع لوحة صور:</strong> العنوان على اليمين ولوحة صور متحركة بلطف على اليسار. عصري ويُظهر نشاط الاتحاد من أول نظرة.</p>`;
+  return layout({ title: 'خيارات الواجهة', body, extraHead: '<link rel="stylesheet" href="/assets/css/heroes.css"><meta name="robots" content="noindex">' });
+}
+
 const notFound = () => layout({ title: 'الصفحة غير موجودة', body: pageHero({ title: 'الصفحة غير موجودة', sub: 'ربما نُقلت الصفحة أو تغيّر رابطها.', extra: '<p style="margin-top:20px"><a class="btn btn-accent" href="/">العودة للرئيسية</a></p>' }) });
 
 // ---------- write ----------
@@ -384,5 +411,6 @@ put('news/index.html', newsIndex());
 news.forEach((n) => put(`news/${n.slug}/index.html`, newsPage(n)));
 put('gallery/index.html', galleryIndex());
 albums.forEach((a) => put(`gallery/${a.slug}/index.html`, albumPage(a)));
+put('hero-options/index.html', heroOptions());
 put('404.html', notFound());
 console.log(`Built: ${liveCentres.length} centres, ${events.length} events, ${news.length} news, ${albums.length} albums, team/coaches/partners → dist/`);
