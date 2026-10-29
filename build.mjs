@@ -51,7 +51,7 @@ function nav() {
   return [
     { href: '/', label: t('الرئيسية', 'Home'), key: 'home' },
     { label: t('عن الاتحاد', 'About'), key: 'about', children: [['/about/team/', t('مجلس الإدارة والفريق', 'Board & Team')], ['/about/coaches/', t('المدربون', 'Coaches')], ['/about/partners/', t('الأندية والشركاء', 'Clubs & Partners')]] },
-    { label: t('مراكز التدريب', 'Training Centres'), key: 'centres', children: [...liveCentres.map((c) => [`/centres/${c.slug}/`, f(c, 'name')]), ['/#centres', t('كل المراكز', 'All centres')]] },
+    { label: t('مراكز التدريب', 'Training Centres'), key: 'centres', children: ['riyadh', 'khobar', 'jeddah'].map((k) => site.centres[k]).map((c) => [`/centres/${c.slug}/`, f(c, 'name') + (c.soon ? ` <span class="soon-badge">${t('قريبًا', 'Soon')}</span>` : '')]) },
     { label: t('المركز الإعلامي', 'Media Centre'), key: 'media', children: [['/events/', t('البطولات والفعاليات', 'Competitions & Events')], ['/news/', t('الأخبار', 'News')], ['/gallery/', t('معرض الصور', 'Photo Gallery')], ['/media/', t('كل المحتوى الإعلامي', 'All media')]] },
   ];
 }
@@ -365,6 +365,17 @@ function centrePage(c) {
   return layout({ path: `/centres/${c.slug}/`, title: f(c, 'name'), desc: `${f(c, 'name')} — ${f(c, 'address')}`, active: 'centres', body });
 }
 
+
+function soonCentrePage(c) {
+  const body = `<section class="hero centre-hero" style="--c:${c.color}"><img class="emblem" src="/assets/img/sgf_emblem.png" alt="" aria-hidden="true"><span class="ring r1"></span><span class="ring r2"></span><div class="inner">
+  <div class="crumbs"><a href="${u('/')}">${t('الرئيسية', 'Home')}</a> › <a href="${u('/#centres')}">${t('مراكز التدريب', 'Training Centres')}</a></div>
+  <h1>${f(c, 'name')}</h1><p class="sub">${t('قريبًا', 'Coming soon')}</p>
+  <p class="place">${t('نعمل على افتتاح مركز تدريب الاتحاد في جدة. تابعنا لمعرفة موعد الافتتاح والتسجيل.', "We are preparing to open the federation's training centre in Jeddah. Follow us for the opening date and registration.")}</p>
+  <div class="actions">${liveCentres.map((x) => `<a class="btn btn-ghost" href="${u(`/centres/${x.slug}/`)}">${f(x, 'name')}</a>`).join('')}</div>
+</div></section><div style="height:40px"></div>`;
+  return layout({ path: `/centres/${c.slug}/`, title: f(c, 'name'), active: 'centres', body });
+}
+
 function teamPage() {
   const groups = people.map((g) => `<section class="section tight"><div class="wrap"><div class="group-head"><h2>${f(g, 'group')}</h2><span></span></div><div class="grid people">${g.people.map((p) => personCard(p)).join('')}</div></div></section>`).join('');
   const body = pageHero({ crumbs: [ABOUT()], title: t('مجلس الإدارة والفريق الإداري', 'Board of Directors & Staff'), sub: t('القيادات والفريق الذي يعمل على تطوير رياضة الجمباز في المملكة.', 'The leadership and team developing gymnastics in the Kingdom.'), extra: aboutTabs('team') }) + groups;
@@ -510,6 +521,7 @@ for (const lang of ['ar', 'en']) {
   put('index.html', home());
   put('home-v2/index.html', homeV2());
   liveCentres.forEach((c) => put(`centres/${c.slug}/index.html`, centrePage(c)));
+  Object.values(site.centres).filter((c) => c.soon && c.slug).forEach((c) => put(`centres/${c.slug}/index.html`, soonCentrePage(c)));
   put('about/team/index.html', teamPage());
   put('about/coaches/index.html', coachesPage());
   put('about/partners/index.html', partnersPage());
