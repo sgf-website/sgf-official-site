@@ -22,3 +22,12 @@ Content lives in `data/`:
 ```
 node build.mjs && python3 -m http.server -d dist 8000
 ```
+
+## Zoho sync
+`.github/workflows/sync-zoho.yml` runs `scripts/sync-zoho.mjs` every hour, on demand, and when Zoho sends a `zoho-update` event.
+It reads records with **Show on Website** ticked from Zoho CRM (Center_Events, Website_Albums, Website_News),
+writes `data/*.json`, downloads photos, and commits — which makes Cloudflare rebuild the site.
+
+GitHub settings → Secrets and variables → Actions:
+- Secrets: `ZOHO_CLIENT_ID`, `ZOHO_CLIENT_SECRET`, `ZOHO_REFRESH_TOKEN`, optional `GOOGLE_API_KEY` (Drive album folders)
+- Variables: `ZOHO_ACCOUNTS_URL` (e.g. https://accounts.zoho.com), `ZOHO_API_URL` (e.g. https://www.zohoapis.com)

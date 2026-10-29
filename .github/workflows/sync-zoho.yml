@@ -1,0 +1,34 @@
+name: Sync content from Zoho
+on:
+  schedule:
+    - cron: '0 * * * *'        # every hour (safety net)
+  repository_dispatch:
+    types: [zoho-update]        # instant trigger from a Zoho CRM workflow
+  workflow_dispatch: {}         # manual "Run workflow" button
+permissions:
+  contents: write
+concurrency:
+  group: zoho-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm install --no-save sharp@0.33.5
+      - run: node scripts/sync-zoho.mjs
+        env:
+          ZOHO_CLIENT_ID: ${{ secrets.ZOHO_CLIENT_ID }}
+          ZOHO_CLIENT_SECRET: ${{ secrets.ZOHO_CLIENT_SECRET }}
+          ZOHO_REFRESH_TOKEN: ${{ secrets.ZOHO_REFRESH_TOKEN }}
+          ZOHO_ACCOUNTS_URL: ${{ vars.ZOHO_ACCOUNTS_URL }}
+          ZOHO_API_URL: ${{ vars.ZOHO_API_URL }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+      - name: Commit changes (triggers Cloudflare rebuild)
+        run: |
+          git config user.name "sgf-website-bot"
+          git config user.email "sgf-website-bot@users.noreply.github.com"
+          git add data assets
+          if git diff --cached --quiet; then echo "No changes"; else git commit -m "Content update from Zoho" && git push; fi
