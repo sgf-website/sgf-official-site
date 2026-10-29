@@ -2,8 +2,8 @@
 
 Static site, hosted free on **Cloudflare Pages**. No dependencies.
 
-## Cloudflare Pages settings
-- Framework preset: **None**
+## Cloudflare settings (Workers + static assets)
+- Deploy command: `npx wrangler deploy` (uses wrangler.jsonc)
 - Build command: `node build.mjs`
 - Build output directory: `dist`
 

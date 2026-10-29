@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers config: serves the built static site from ./dist
+  "name": "sgf-official-site",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
