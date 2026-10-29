@@ -68,7 +68,7 @@ const folderId = (url = '') => (url.match(/folders\/([A-Za-z0-9_-]+)/) || [])[1]
 async function driveImages(folder) {
   if (!GKEY || !folder) return [];
   const q = encodeURIComponent(`'${folder}' in parents and mimeType contains 'image/' and trashed = false`);
-  const j = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&orderBy=name&pageSize=500&key=${GKEY}`).then((x) => x.json());
+  const j = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&orderBy=name&pageSize=500&supportsAllDrives=true&includeItemsFromAllDrives=true&key=${GKEY}`).then((x) => x.json());
   if (j.error) console.log(`::warning title=Google Drive::${j.error.message}`);
   return j.files || [];
 }
@@ -77,7 +77,8 @@ async function main() {
   if (process.env.DRIVE_TEST === 'true') {
     for (const a of readJson('albums.json', [])) {
       const files = await driveImages(a.drive_folder);
-      console.log(`::notice title=Drive test::${a.slug}: Google Drive returned ${files.length} photos (key ${GKEY ? 'present' : 'missing'})`);
+      const meta = await fetch(`https://www.googleapis.com/drive/v3/files/${a.drive_folder}?fields=id,name&supportsAllDrives=true&key=${GKEY}`).then((x) => x.json());
+      console.log(`::notice title=Drive test::${a.slug}: folder ${meta.error ? 'NOT readable (' + meta.error.message + ')' : 'readable (' + meta.name + ')'}; ${files.length} photos listed (key ${GKEY ? 'present' : 'missing'})`);
     }
     return;
   }
@@ -105,7 +106,7 @@ async function main() {
       for (const f of await driveImages(folder)) {
         const name = f.name.replace(/\.[^.]+$/, '').replace(/[^A-Za-z0-9_-]+/g, '_');
         try {
-          const res = await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media&key=${GKEY}`);
+          const res = await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media&supportsAllDrives=true&key=${GKEY}`);
           if (!res.ok) throw new Error(`Drive ${res.status}`);
           await saveImage(Buffer.from(await res.arrayBuffer()), `img/albums/${slug}`, name); photos.push(name);
         } catch (err) { console.warn(`skipped photo ${f.name}: ${err.message}`); }
