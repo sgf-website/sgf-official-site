@@ -134,4 +134,9 @@ async function main() {
   console.log(`Synced from Zoho: ${events.length} events, ${albums.length} albums, ${news.length} news`);
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+main().catch((e) => {
+  const msg = String(e && e.message || e).replace(/[\r\n]+/g, ' ').slice(0, 600);
+  console.error(e);
+  console.log(`::error title=Zoho sync failed::${msg}`);
+  process.exit(1);
+});
