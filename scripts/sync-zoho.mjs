@@ -73,6 +73,7 @@ async function driveImages(folder) {
 }
 
 async function main() {
+  if (!process.env.ZOHO_REFRESH_TOKEN) { console.log('Zoho secrets not set yet — skipping sync.'); return; }
   TOKEN = await token();
   const prevEvents = Object.fromEntries(readJson('events.json', []).map((e) => [e.slug, e]));
   const prevAlbums = Object.fromEntries(readJson('albums.json', []).map((a) => [a.slug, a]));
