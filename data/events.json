@@ -18,9 +18,14 @@
     "album": "gfa-central-region-2026",
     "video": "https://drive.google.com/file/d/1QQPMdV3SAcBYF9VzVzLrjTleGbeo9U9e/view",
     "register_link": "",
-    "media_folder": "",
-    "videos": [],
-    "zoho_modified": "2026-10-30T01:37:43+03:00"
+    "media_folder": "1Dp_ICQTI2ptNM1XmCK_GuSWpJw9c7obd",
+    "videos": [
+      {
+        "id": "1QQPMdV3SAcBYF9VzVzLrjTleGbeo9U9e",
+        "name": "بطولة الجمباز للجميع المنطقة الوسطى.mov"
+      }
+    ],
+    "zoho_modified": "2026-10-30T16:13:24+03:00"
   },
   {
     "slug": "friendly-2024",
@@ -42,9 +47,9 @@
     "album": "",
     "video": "",
     "register_link": "",
-    "media_folder": "",
+    "media_folder": "1CAN9OCG1Jbj5hJ7nGZLFtNt1Q1ZvhhUP",
     "videos": [],
-    "zoho_modified": "2026-10-30T00:31:18+03:00"
+    "zoho_modified": "2026-10-30T16:13:24+03:00"
   },
   {
     "slug": "friendly-2023",
@@ -62,12 +67,119 @@
     "summary_en": "The centre's annual friendly competition, with a podium ceremony and participation certificates.",
     "details": "<p>البطولة الودية السنوية للاعبي ولاعبات مركز تدريب الخبر، مع منصة تتويج وشهادات مشاركة لكل اللاعبين.</p>",
     "details_en": "<p>The annual friendly competition for the players of the Khobar Training Centre, with a podium ceremony and participation certificates for every player.</p>",
+    "cover": "/assets/img/albums/friendly-2023/1.webp",
+    "album": "friendly-2023",
+    "video": "",
+    "register_link": "",
+    "media_folder": "1ndQqMEj7QfXRfyf-sQduA8qlPscnJKnA",
+    "videos": [
+      {
+        "id": "1_qLvZWEUHooCOguB-eYYEDo-_NPUUCYs",
+        "name": "2012 participants final 2.mp4"
+      },
+      {
+        "id": "1zjMNFFL1tMIYb-YUOtB1eS3WK2MSUr4t",
+        "name": "2012 participants.mp4"
+      },
+      {
+        "id": "1QkQcK3iNrzqGNDM_gQ846od02rT5Bgli",
+        "name": "2013 participants final 3-1.mp4"
+      },
+      {
+        "id": "1NR2J8VswtD3q3lrutRijq24Lnf_92kPv",
+        "name": "2013 participants final 3.mp4"
+      },
+      {
+        "id": "1u6EGtHy3DMalH2z7o2ONvawdbccPkgzv",
+        "name": "2013 participants.mp4"
+      },
+      {
+        "id": "1l_-RLEGxkqK1NTn-N_oZJahuIpRcIFsx",
+        "name": "2017 participants final 3.mp4"
+      },
+      {
+        "id": "1eXW2cPdXINwO2lsOcpt8SRaFh60L6WWe",
+        "name": "2017 participants.mp4"
+      },
+      {
+        "id": "15qeuY5p40c_F52zSobxP-Qgl072aXr0w",
+        "name": "Aliya Dablool Dance.mp4"
+      },
+      {
+        "id": "1TuE57IJ-y5f5mLClo6_MBWG3o3K3W5sr",
+        "name": "Eliana Albataenah Dance.mp4"
+      },
+      {
+        "id": "1NE23rVHi1i-qQSAuZ-dTE71wlQhSpXld",
+        "name": "Ghala Simbawa.mp4"
+      },
+      {
+        "id": "10HtrQiKhIlrlOs_eIvByChpcMTbd9zI-",
+        "name": "gymnastics1-2.mp4"
+      },
+      {
+        "id": "1bEYLyMEDukIulqBxZYKnR3LqcW0vaD1x",
+        "name": "gymnastics1-2.mp4"
+      }
+    ],
+    "zoho_modified": "2026-10-30T16:13:24+03:00"
+  },
+  {
+    "slug": "gfa-eastern-region-2026",
+    "type": "competition",
+    "status": "published",
+    "title": "بطولة الجمباز للجميع — المنطقة الشرقية 2026",
+    "title_en": "Gymnastics for All Championship — Eastern Region 2026",
+    "date": "2026-01-01",
+    "date_label": "2026",
+    "date_end": "",
+    "centre": "khobar",
+    "location": "",
+    "location_en": "",
+    "summary": "",
+    "summary_en": "",
+    "details": "",
+    "details_en": "",
     "cover": "",
     "album": "",
     "video": "",
     "register_link": "",
-    "media_folder": "",
-    "videos": [],
-    "zoho_modified": "2026-10-30T00:31:18+03:00"
+    "media_folder": "1MNn4moWZssmWJ_RslnzyKxfODzXV4KXK",
+    "videos": [
+      {
+        "id": "11o2aNRwEBuEsqUoRSwiITJd_pYdeF96e",
+        "name": "بطولة الجمبازللجميع الشرقية- 22 - 8 - 2026.mp4"
+      }
+    ],
+    "zoho_modified": "2026-10-30T16:13:27+03:00"
+  },
+  {
+    "slug": "gfa-western-region-2026",
+    "type": "competition",
+    "status": "published",
+    "title": "بطولة الجمباز للجميع — المنطقة الغربية 2026",
+    "title_en": "Gymnastics for All Championship — Western Region 2026",
+    "date": "2026-01-01",
+    "date_label": "2026",
+    "date_end": "",
+    "centre": "jeddah",
+    "location": "",
+    "location_en": "",
+    "summary": "",
+    "summary_en": "",
+    "details": "",
+    "details_en": "",
+    "cover": "",
+    "album": "",
+    "video": "",
+    "register_link": "",
+    "media_folder": "1d_JuybHhQHmOf2VNl9bqOgSrUNHWcVuG",
+    "videos": [
+      {
+        "id": "1ecuDnbBbrFbQTDyfJGcZQVA1dPhymcqE",
+        "name": "بطولة الجمباز للجميع - المنطقة الغربية 2026.mp4"
+      }
+    ],
+    "zoho_modified": "2026-10-30T16:13:27+03:00"
   }
 ]
