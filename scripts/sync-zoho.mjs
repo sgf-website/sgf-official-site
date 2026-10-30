@@ -73,21 +73,30 @@ async function driveImages(folder, kind = 'image/') {
   return j.files || [];
 }
 
-// Download all photos of a Drive folder into assets/img/albums/<slug>/ (only when the folder changed).
+// Keep assets/img/albums/<slug>/ in step with a Drive folder: download only photos not saved yet
+// (so photos added to the folder later are picked up), drop ones removed from the folder.
+const natural = (a, b) => a.localeCompare(b, undefined, { numeric: true });
 async function folderPhotos(slug, folder, prev) {
   let { photos = [], photo_dir = `/assets/img/albums/${slug}/` } = prev;
-  if (folder && GKEY && (prev.drive_folder !== folder || !photos.length)) {
-    photos = []; photo_dir = `/assets/img/albums/${slug}/`;
-    for (const f of await driveImages(folder)) {
-      const name = f.name.replace(/\.[^.]+$/, '').replace(/[^A-Za-z0-9_-]+/g, '_');
-      try {
-        const res = await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media&supportsAllDrives=true&key=${GKEY}`);
-        if (!res.ok) throw new Error(`Drive ${res.status}`);
-        await saveImage(Buffer.from(await res.arrayBuffer()), `img/albums/${slug}`, name); photos.push(name);
-      } catch (err) { console.warn(`skipped photo ${f.name}: ${err.message}`); }
-    }
+  if (!folder || !GKEY) return { photos, photo_dir };
+  if (prev.drive_folder !== folder) photos = [];
+  photo_dir = `/assets/img/albums/${slug}/`;
+  const files = await driveImages(folder);
+  if (!files.length) return { photos: photos.filter((p) => p === 'cover'), photo_dir };
+  const want = files.map((f) => ({ ...f, key: f.name.replace(/\.[^.]+$/, '').replace(/[^A-Za-z0-9_-]+/g, '_') || f.id }));
+  const seen = new Set(); for (const w of want) { if (seen.has(w.key)) w.key = `${w.key}_${w.id.slice(-6)}`; seen.add(w.key); }
+  const out = []; let failed = 0;
+  for (const w of want) {
+    const onDisk = existsSync(join(ROOT, 'assets', 'img', 'albums', slug, `${w.key}.webp`));
+    if (photos.includes(w.key) && onDisk) { out.push(w.key); continue; }
+    try {
+      const res = await fetch(`https://www.googleapis.com/drive/v3/files/${w.id}?alt=media&supportsAllDrives=true&key=${GKEY}`);
+      if (!res.ok) throw new Error(`Drive ${res.status} ${(await res.text()).slice(0, 120)}`);
+      await saveImage(Buffer.from(await res.arrayBuffer()), `img/albums/${slug}`, w.key); out.push(w.key);
+    } catch (err) { failed++; if (failed <= 5) console.log(`::warning title=Photo skipped (${slug})::${w.name}: ${err.message}`); }
   }
-  return { photos, photo_dir };
+  if (failed) console.log(`::warning title=Photos skipped::${slug}: ${failed} of ${want.length} photos could not be saved`);
+  return { photos: out.sort(natural), photo_dir };
 }
 
 async function main() {
