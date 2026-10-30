@@ -75,7 +75,8 @@ async function driveImages(folder) {
 
 async function main() {
   if (process.env.DRIVE_TEST === 'true') {
-    for (const a of readJson('albums.json', [])) {
+    const extra = process.env.DRIVE_TEST_FOLDER ? [{ slug: 'test-folder', drive_folder: process.env.DRIVE_TEST_FOLDER }] : [];
+    for (const a of [...extra, ...readJson('albums.json', [])]) {
       const files = await driveImages(a.drive_folder);
       const meta = await fetch(`https://www.googleapis.com/drive/v3/files/${a.drive_folder}?fields=id,name&supportsAllDrives=true&key=${GKEY}`).then((x) => x.json());
       console.log(`::notice title=Drive test::${a.slug}: folder ${meta.error ? 'NOT readable (' + meta.error.message + ')' : 'readable (' + meta.name + ')'}; ${files.length} photos listed (key ${GKEY ? 'present' : 'missing'})`);

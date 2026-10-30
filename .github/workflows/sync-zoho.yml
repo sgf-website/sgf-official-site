@@ -10,6 +10,10 @@ on:
         description: 'Only test the Google Drive key (no changes)'
         type: boolean
         default: false
+      drive_test_folder:
+        description: 'Optional Drive folder ID to test'
+        type: string
+        default: ''
 permissions:
   contents: write
 concurrency:
@@ -32,6 +36,7 @@ jobs:
           ZOHO_API_URL: ${{ vars.ZOHO_API_URL }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           DRIVE_TEST: ${{ inputs.drive_test }}
+          DRIVE_TEST_FOLDER: ${{ inputs.drive_test_folder }}
       - name: Commit changes (triggers Cloudflare rebuild)
         run: |
           git config user.name "sgf-website-bot"
