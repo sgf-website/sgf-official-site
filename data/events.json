@@ -18,6 +18,8 @@
     "album": "gfa-central-region-2026",
     "video": "https://drive.google.com/file/d/1QQPMdV3SAcBYF9VzVzLrjTleGbeo9U9e/view",
     "register_link": "",
+    "media_folder": "",
+    "videos": [],
     "zoho_modified": "2026-10-30T01:37:43+03:00"
   },
   {
@@ -40,6 +42,8 @@
     "album": "",
     "video": "",
     "register_link": "",
+    "media_folder": "",
+    "videos": [],
     "zoho_modified": "2026-10-30T00:31:18+03:00"
   },
   {
@@ -62,6 +66,8 @@
     "album": "",
     "video": "",
     "register_link": "",
+    "media_folder": "",
+    "videos": [],
     "zoho_modified": "2026-10-30T00:31:18+03:00"
   }
 ]
