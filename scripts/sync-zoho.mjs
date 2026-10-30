@@ -96,6 +96,14 @@ async function main() {
     for (const a of [...extra, ...readJson('albums.json', [])]) {
       const files = await driveImages(a.drive_folder);
       const meta = await fetch(`https://www.googleapis.com/drive/v3/files/${a.drive_folder}?fields=id,name&supportsAllDrives=true&key=${GKEY}`).then((x) => x.json());
+      if (a.slug === 'test-folder') {
+        const subs = await driveImages(a.drive_folder, 'application/vnd.google-apps.folder');
+        for (const sf of subs) {
+          const ph = await driveImages(sf.id, 'image/'); const vd = await driveImages(sf.id, 'video/');
+          const inner = await driveImages(sf.id, 'application/vnd.google-apps.folder');
+          console.log(`::notice title=Subfolder::${sf.id} | ${sf.name} | ${ph.length} photos | ${vd.length} videos | ${inner.length} subfolders${inner.length ? ' (' + inner.map((i) => i.name).join(', ') + ')' : ''} | first photo: ${ph[0] ? ph[0].name : '-'}`);
+        }
+      }
       console.log(`::notice title=Drive test::${a.slug}: folder ${meta.error ? 'NOT readable (' + meta.error.message + ')' : 'readable (' + meta.name + ')'}; ${files.length} photos listed (key ${GKEY ? 'present' : 'missing'})`);
     }
     return;
