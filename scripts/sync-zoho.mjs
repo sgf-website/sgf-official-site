@@ -64,7 +64,7 @@ async function zohoImage(module, rec, field, dir, name) {
   return saveImage(Buffer.from(await r.arrayBuffer()), dir, name);
 }
 
-const folderId = (url = '') => (url.match(/folders\/([A-Za-z0-9_-]+)/) || [])[1];
+const folderId = (url) => (String(url || '').match(/folders\/([A-Za-z0-9_-]+)/) || [])[1];
 async function driveImages(folder, kind = 'image/') {
   if (!GKEY || !folder) return [];
   const q = encodeURIComponent(`'${folder}' in parents and mimeType contains '${kind}' and trashed = false`);
