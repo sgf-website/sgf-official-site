@@ -92,7 +92,9 @@ async function folderPhotos(slug, folder, prev) {
     try {
       const res = await fetch(`https://www.googleapis.com/drive/v3/files/${w.id}?alt=media&supportsAllDrives=true&key=${GKEY}`);
       if (!res.ok) throw new Error(`Drive ${res.status} ${(await res.text()).slice(0, 120)}`);
-      await saveImage(Buffer.from(await res.arrayBuffer()), `img/albums/${slug}`, w.key); out.push(w.key);
+      let buf = Buffer.from(await res.arrayBuffer());
+      if (/\.hei[cf]$/i.test(w.name)) buf = Buffer.from(await (await import('heic-convert')).default({ buffer: buf, format: 'JPEG', quality: 0.9 }));
+      await saveImage(buf, `img/albums/${slug}`, w.key); out.push(w.key);
     } catch (err) { failed++; if (failed <= 5) console.log(`::warning title=Photo skipped (${slug})::${w.name}: ${err.message}`); }
   }
   if (failed) console.log(`::warning title=Photos skipped::${slug}: ${failed} of ${want.length} photos could not be saved`);
