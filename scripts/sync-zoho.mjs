@@ -65,12 +65,29 @@ async function zohoImage(module, rec, field, dir, name) {
 }
 
 const folderId = (url = '') => (url.match(/folders\/([A-Za-z0-9_-]+)/) || [])[1];
-async function driveImages(folder) {
+async function driveImages(folder, kind = 'image/') {
   if (!GKEY || !folder) return [];
-  const q = encodeURIComponent(`'${folder}' in parents and mimeType contains 'image/' and trashed = false`);
+  const q = encodeURIComponent(`'${folder}' in parents and mimeType contains '${kind}' and trashed = false`);
   const j = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&orderBy=name&pageSize=500&supportsAllDrives=true&includeItemsFromAllDrives=true&key=${GKEY}`).then((x) => x.json());
   if (j.error) console.log(`::warning title=Google Drive::${j.error.message}`);
   return j.files || [];
+}
+
+// Download all photos of a Drive folder into assets/img/albums/<slug>/ (only when the folder changed).
+async function folderPhotos(slug, folder, prev) {
+  let { photos = [], photo_dir = `/assets/img/albums/${slug}/` } = prev;
+  if (folder && GKEY && (prev.drive_folder !== folder || !photos.length)) {
+    photos = []; photo_dir = `/assets/img/albums/${slug}/`;
+    for (const f of await driveImages(folder)) {
+      const name = f.name.replace(/\.[^.]+$/, '').replace(/[^A-Za-z0-9_-]+/g, '_');
+      try {
+        const res = await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media&supportsAllDrives=true&key=${GKEY}`);
+        if (!res.ok) throw new Error(`Drive ${res.status}`);
+        await saveImage(Buffer.from(await res.arrayBuffer()), `img/albums/${slug}`, name); photos.push(name);
+      } catch (err) { console.warn(`skipped photo ${f.name}: ${err.message}`); }
+    }
+  }
+  return { photos, photo_dir };
 }
 
 async function main() {
@@ -89,7 +106,7 @@ async function main() {
   const prevAlbums = Object.fromEntries(readJson('albums.json', []).map((a) => [a.slug, a]));
   const prevNews = Object.fromEntries(readJson('news.json', []).map((n) => [n.slug, n]));
 
-  const evRows = await coql("select Name, Name_EN, Website_Slug, Event_Date, End_Date, Event_Type, Branch, Location, Location_EN, Website_Summary, Website_Summary_EN, Website_Details, Website_Details_EN, Registration_Link, Video_Link, Modified_Time from Center_Events where Show_on_Website = true");
+  const evRows = await coql("select Name, Name_EN, Website_Slug, Media_Folder, Event_Date, End_Date, Event_Type, Branch, Location, Location_EN, Website_Summary, Website_Summary_EN, Website_Details, Website_Details_EN, Registration_Link, Video_Link, Modified_Time from Center_Events where Show_on_Website = true");
   const alRows = await coql("select Name, Title_EN, Website_Slug, Branch, Album_Date, Description, Description_EN, Drive_Folder_Link, Related_Event, Modified_Time from Website_Albums where Show_on_Website = true");
   const nwRows = await coql("select Name, Title_EN, Website_Slug, Branch, News_Date, Summary, Summary_EN, News_Body, News_Body_EN, Related_Event, Related_Album, Modified_Time from Website_News where Show_on_Website = true");
 
@@ -101,18 +118,8 @@ async function main() {
   for (const r of alRows) {
     const slug = alSlug[r.id]; const prev = prevAlbums[slug] || {};
     const folder = folderId(r.Drive_Folder_Link);
-    let { photos = [], photo_dir = `/assets/img/albums/${slug}/`, cover = '' } = prev;
-    if (folder && (prev.drive_folder !== folder || !photos.length) && GKEY) {
-      photos = []; photo_dir = `/assets/img/albums/${slug}/`;
-      for (const f of await driveImages(folder)) {
-        const name = f.name.replace(/\.[^.]+$/, '').replace(/[^A-Za-z0-9_-]+/g, '_');
-        try {
-          const res = await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media&supportsAllDrives=true&key=${GKEY}`);
-          if (!res.ok) throw new Error(`Drive ${res.status}`);
-          await saveImage(Buffer.from(await res.arrayBuffer()), `img/albums/${slug}`, name); photos.push(name);
-        } catch (err) { console.warn(`skipped photo ${f.name}: ${err.message}`); }
-      }
-    }
+    let { photos, photo_dir } = await folderPhotos(slug, folder, prev);
+    let cover = prev.cover || '';
     const unchanged = prev.zoho_modified === r.Modified_Time;
     const zCover = unchanged ? '' : await zohoImage('Website_Albums', r, 'Cover_Photo', `img/albums/${slug}`, 'cover');
     if (zCover) cover = 'cover'; else if (!cover && photos.length) cover = photos[0];
@@ -125,9 +132,22 @@ async function main() {
   for (const r of evRows) {
     const slug = evSlug[r.id]; const prev = prevEvents[slug] || {};
     const cover = (prev.zoho_modified === r.Modified_Time ? '' : await zohoImage('Center_Events', r, 'Cover_Photo', 'img/events', slug)) || prev.cover || '';
-    const album = albums.find((a) => a.event === slug);
+    let album = albums.find((a) => a.event === slug);
+    const media = folderId(r.Media_Folder);
+    let videos = prev.videos || [];
+    if (media) {
+      if (!album) {
+        const pa = prevAlbums[slug] || {};
+        const { photos, photo_dir } = await folderPhotos(slug, media, pa);
+        if (photos.length) {
+          album = { slug, status: 'published', auto: true, title: r.Name, title_en: r.Name_EN || '', date: r.Event_Date || '', centre: centreKey(r.Branch), description: r.Website_Summary || '', description_en: r.Website_Summary_EN || '', cover: photos[0], event: slug, photo_dir, photos, drive_folder: media };
+          albums.push(album);
+        }
+      }
+      if (prev.media_folder !== media || prev.zoho_modified !== r.Modified_Time) videos = (await driveImages(media, 'video/')).map((v) => ({ id: v.id, name: v.name }));
+    } else videos = [];
     const year = (r.Name.match(/(20\d\d)/) || [])[1];
-    events.push({ slug, type: r.Event_Type === 'Competition' ? 'competition' : 'event', status: 'published', title: r.Name, title_en: r.Name_EN || '', date: r.Event_Date || (year ? `${year}-01-01` : ''), ...(r.Event_Date ? {} : year ? { date_label: year } : {}), date_end: r.End_Date || '', centre: centreKey(r.Branch), location: r.Location || '', location_en: r.Location_EN || '', summary: r.Website_Summary || '', summary_en: r.Website_Summary_EN || '', details: r.Website_Details || '', details_en: r.Website_Details_EN || '', cover, album: album ? album.slug : '', video: r.Video_Link || '', register_link: r.Registration_Link || '', zoho_modified: r.Modified_Time });
+    events.push({ slug, type: r.Event_Type === 'Competition' ? 'competition' : 'event', status: 'published', title: r.Name, title_en: r.Name_EN || '', date: r.Event_Date || (year ? `${year}-01-01` : ''), ...(r.Event_Date ? {} : year ? { date_label: year } : {}), date_end: r.End_Date || '', centre: centreKey(r.Branch), location: r.Location || '', location_en: r.Location_EN || '', summary: r.Website_Summary || '', summary_en: r.Website_Summary_EN || '', details: r.Website_Details || '', details_en: r.Website_Details_EN || '', cover: cover || (album ? `${album.photo_dir}${album.cover}.webp` : ''), album: album ? album.slug : '', video: r.Video_Link || '', register_link: r.Registration_Link || '', media_folder: media || '', videos, zoho_modified: r.Modified_Time });
   }
 
   // News

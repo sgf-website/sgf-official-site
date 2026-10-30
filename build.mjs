@@ -448,6 +448,7 @@ function eventPage(e) {
     <div class="facts"><div><span>${t('التاريخ', 'Date')}</span><strong>${esc(fmtRange(e))}</strong></div><div><span>${t('المكان', 'Venue')}</span><strong>${esc(f(e, 'location'))}</strong></div><div><span>${t('المركز', 'Centre')}</span><strong>${c.page ? `<a href="${u(`/centres/${c.slug}/`)}">${esc(f(c, 'name'))}</a>` : esc(f(c, 'name'))}</strong></div></div>
     ${f(e, 'details')}
     <div class="links">${links}</div>
+    ${(e.videos || []).length ? `<h2 style="font-size:20px;margin:28px 0 12px">${t('الفيديو', 'Video')}</h2><div class="videos">${e.videos.map((v) => `<div class="video"><iframe src="https://drive.google.com/file/d/${esc(v.id)}/preview" allow="autoplay; fullscreen" allowfullscreen loading="lazy" title="${esc(v.name)}"></iframe></div>`).join('')}</div>` : ''}
     ${preview}
   </div>
 </article></div>`;

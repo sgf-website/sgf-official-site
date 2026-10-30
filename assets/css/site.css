@@ -309,3 +309,4 @@ html[lang="en"] .hero .emblem,html[lang="en"] .hx .emblem{left:auto;right:-60px}
 @keyframes fxfloat{0%,100%{transform:translate(0,0) rotate(0)}33%{transform:translate(26px,-18px) rotate(8deg)}66%{transform:translate(-18px,14px) rotate(-6deg)}}
 @keyframes fxspark{0%{opacity:0;transform:translateY(0)}20%{opacity:.7}100%{opacity:0;transform:translateY(-120px)}}
 @media (prefers-reduced-motion:reduce){.fx i,.fx b{animation:none}}
+.videos{display:grid;gap:14px}.video{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000}.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
